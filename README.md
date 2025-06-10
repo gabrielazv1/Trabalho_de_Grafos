@@ -23,19 +23,13 @@ Este repositório contém o projeto desenvolvido em grupo para a disciplina **Al
 ## Fluxo de Trabalho (Git)
 
 1. Trabalhe apenas na sua branch.
-2. Salve seu progresso:
-   ```bash
-   git add .
-   git commit -m "Descrição do que foi feito"
-   git push
-   ```
-
+2. Salve seu progresso.
 3. Quando terminar, **abra um Pull Request** para a `desenvolvimento`:
-- Acesse o GitHub
-- Clique em **Compare & pull request**
-- Verifique se a base é `desenvolvimento` e a compare é sua branch
- - Descreva o que foi feito
-- Clique em **Create pull request**
+  - Acesse o GitHub
+  - Clique em **Compare & pull request**
+  - Verifique se a base é `desenvolvimento` e a compare é sua branch
+  - Descreva o que foi feito
+  - Clique em **Create pull request**
 
 4. Após revisão, o grupo faz o **merge** do PR para a `desenvolvimento`.
 
