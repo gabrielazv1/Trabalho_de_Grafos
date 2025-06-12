@@ -1,0 +1,15 @@
+C:\Users\isado\source\repos\trabalho_grafos\TRABALHO GRAFOS\bin\Debug\net8.0\TRABALHO GRAFOS.exe
+C:\Users\isado\source\repos\trabalho_grafos\TRABALHO GRAFOS\bin\Debug\net8.0\TRABALHO GRAFOS.deps.json
+C:\Users\isado\source\repos\trabalho_grafos\TRABALHO GRAFOS\bin\Debug\net8.0\TRABALHO GRAFOS.runtimeconfig.json
+C:\Users\isado\source\repos\trabalho_grafos\TRABALHO GRAFOS\bin\Debug\net8.0\TRABALHO GRAFOS.dll
+C:\Users\isado\source\repos\trabalho_grafos\TRABALHO GRAFOS\bin\Debug\net8.0\TRABALHO GRAFOS.pdb
+C:\Users\isado\source\repos\trabalho_grafos\TRABALHO GRAFOS\obj\Debug\net8.0\TRABALHO GRAFOS.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\isado\source\repos\trabalho_grafos\TRABALHO GRAFOS\obj\Debug\net8.0\TRABALHO GRAFOS.AssemblyInfoInputs.cache
+C:\Users\isado\source\repos\trabalho_grafos\TRABALHO GRAFOS\obj\Debug\net8.0\TRABALHO GRAFOS.AssemblyInfo.cs
+C:\Users\isado\source\repos\trabalho_grafos\TRABALHO GRAFOS\obj\Debug\net8.0\TRABALHO GRAFOS.csproj.CoreCompileInputs.cache
+C:\Users\isado\source\repos\trabalho_grafos\TRABALHO GRAFOS\obj\Debug\net8.0\TRABALHO GRAFOS.sourcelink.json
+C:\Users\isado\source\repos\trabalho_grafos\TRABALHO GRAFOS\obj\Debug\net8.0\TRABALHO GRAFOS.dll
+C:\Users\isado\source\repos\trabalho_grafos\TRABALHO GRAFOS\obj\Debug\net8.0\refint\TRABALHO GRAFOS.dll
+C:\Users\isado\source\repos\trabalho_grafos\TRABALHO GRAFOS\obj\Debug\net8.0\TRABALHO GRAFOS.pdb
+C:\Users\isado\source\repos\trabalho_grafos\TRABALHO GRAFOS\obj\Debug\net8.0\TRABALHO GRAFOS.genruntimeconfig.cache
+C:\Users\isado\source\repos\trabalho_grafos\TRABALHO GRAFOS\obj\Debug\net8.0\ref\TRABALHO GRAFOS.dll
