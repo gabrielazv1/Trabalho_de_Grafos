@@ -12,6 +12,13 @@ namespace TRABALHO_GRAFOS.Codigo
         public List<Aresta> arestas = new List<Aresta>();
         public List<Vertice> verticesAdjacentes = new List<Vertice>();
 
+
+        public List<Aresta> Arestas
+        {
+            get { return arestas; }
+            set { arestas = value; }
+        }
+
         public Vertice(int Id)
         {
             id = Id;
@@ -21,6 +28,16 @@ namespace TRABALHO_GRAFOS.Codigo
         {
             
             return default;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is Vertice v && id == v.id;
+        }
+
+        public override int GetHashCode()
+        {
+            return id.GetHashCode();
         }
     }
 }

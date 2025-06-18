@@ -8,11 +8,24 @@ namespace TRABALHO_GRAFOS.Codigo
 {
     internal class Aresta
     {
-        public int origem;
-        public int destino;
+        public Vertice origem;
+        public Vertice destino;
         public int peso;
 
-        public Aresta(int origem, int destino, int peso)
+        public Vertice Origem
+        {
+            get { return origem; }
+            set { origem = value; }
+        }
+
+        public Vertice Destino
+        {
+            get { return destino; }
+            set { destino = value; }
+        }
+
+
+        public Aresta(Vertice origem, Vertice destino, int peso)
         {
             this.origem = origem;
             this.destino = destino;
