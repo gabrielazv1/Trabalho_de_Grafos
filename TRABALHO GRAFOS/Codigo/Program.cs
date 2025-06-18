@@ -220,7 +220,7 @@ namespace TRABALHO_GRAFOS.Codigo
                     Pausa();
                     return false;
                 }
-                Aresta a = new Aresta(verticeOrigem, verticeDestino, peso);
+                Aresta a = new Aresta(new Vertice(verticeOrigem), new Vertice(verticeDestino), peso);
                 if (grafo.AdicionarAresta(a))
                 {
                     Console.Clear();

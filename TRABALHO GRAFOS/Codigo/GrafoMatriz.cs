@@ -38,19 +38,19 @@ namespace TRABALHO_GRAFOS.Codigo
         {
             try
             {
-                if (a.origem < 0 || a.origem >= matrizGrafo.GetLength(0))
+                if (a.Origem.id < 0 || a.Origem.id >= matrizGrafo.GetLength(0))
                     throw new ArgumentOutOfRangeException(nameof(a.origem), "O vértice está fora dos limites da matriz de adjacência.");
 
-                if (a.destino < 0 || a.destino >= matrizGrafo.GetLength(0))
+                if (a.Destino.id < 0 || a.Destino.id >= matrizGrafo.GetLength(0))
                     throw new ArgumentOutOfRangeException(nameof(a.destino), "O destino está fora dos limites da matriz de adjacência.");
 
                 if (a.peso <= 0)
                     throw new ArgumentException("O peso deve ser maior que zero.", nameof(a.peso));
 
-                if (matrizGrafo[a.origem, a.destino] > 0)
+                if (matrizGrafo[a.Origem.id, a.Destino.id] > 0)
                     throw new ArgumentOutOfRangeException(nameof(a.destino), "A aresta informada já existe");
 
-                matrizGrafo[a.origem, a.destino] = a.peso;
+                matrizGrafo[a.Origem.id, a.Destino.id] = a.peso;
                 return true;
             }
             catch (Exception ex)

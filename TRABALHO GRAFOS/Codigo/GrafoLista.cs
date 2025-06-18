@@ -4,7 +4,7 @@ using TRABALHO_GRAFOS.Codigo.Interface;
 
 namespace TRABALHO_GRAFOS.Codigo
 {
-    internal class GrafoLista : IGrafo
+    internal class GrafoLista : Grafo
     {
         private List<Aresta>[] listaGrafo;
 
@@ -17,20 +17,14 @@ namespace TRABALHO_GRAFOS.Codigo
             }
         }
 
-        public GrafoLista(int vertices, List<List<int>> dimac)
+        public GrafoLista(int vertices, List<List<int>> dimac) : this(vertices)
         {
-            listaGrafo = new List<Aresta>[vertices];
-            for (int i = 0; i < vertices; i++)
-            {
-                listaGrafo[i] = new List<Aresta>();
-            }
-
             foreach (List<int> linha in dimac)
             {
                 if (linha.Count == 3)
                 {
-                    int origem = linha[0];
-                    int destino = linha[1];
+                    Vertice origem = new Vertice(linha[0]);
+                    Vertice destino = new Vertice(linha[1]);
                     int peso = linha[2];
                     Aresta ar = new Aresta(origem, destino, peso);
                     AdicionarAresta(ar);
@@ -40,10 +34,10 @@ namespace TRABALHO_GRAFOS.Codigo
 
         public bool AdicionarAresta(Aresta a)
         {
-            if (a.origem >= 0 && a.origem < listaGrafo.Length &&
-                a.destino >= 0 && a.destino < listaGrafo.Length)
+            if (a.Origem.id >= 0 && a.Origem.id < listaGrafo.Length &&
+                a.Destino.id >= 0 && a.Destino.id < listaGrafo.Length)
             {
-                listaGrafo[a.origem].Add(a);
+                listaGrafo[a.Origem.id].Add(a);
                 return true;
             }
             return false;
