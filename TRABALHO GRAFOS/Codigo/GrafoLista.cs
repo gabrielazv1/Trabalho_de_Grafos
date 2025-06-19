@@ -6,7 +6,7 @@ namespace TRABALHO_GRAFOS.Codigo
 {
     internal class GrafoLista : Grafo
     {
-        public List<Aresta>[] listaGrafo;
+        private List<Aresta>[] listaGrafo;
 
         public GrafoLista(int vertices)
         {
@@ -43,10 +43,6 @@ namespace TRABALHO_GRAFOS.Codigo
             return false;
         }
 
-        public void TrocaDoisVertices(Vertice v1, Vertice v2)
-        {
-        }
-
         public bool AdicionarVertice(Vertice v)
         {
             return false;
@@ -66,7 +62,7 @@ namespace TRABALHO_GRAFOS.Codigo
                 {
                     foreach (Aresta a in listaGrafo[i])
                     {
-                        Console.Write($"-> {a.Destino.id} (peso {a.peso}) ");
+                        Console.Write($"-> {a.Destino.id} (peso {a.Peso}) ");
                     }
                 }
                 else
@@ -76,6 +72,5 @@ namespace TRABALHO_GRAFOS.Codigo
                 Console.WriteLine();
             }
         }
-
     }
 }

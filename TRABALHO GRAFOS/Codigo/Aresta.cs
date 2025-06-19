@@ -8,9 +8,9 @@ namespace TRABALHO_GRAFOS.Codigo
 {
     internal class Aresta
     {
-        public Vertice origem;
-        public Vertice destino;
-        public int peso;
+        private Vertice origem;
+        private Vertice destino;
+        private int peso;
 
         public Vertice Origem
         {
@@ -24,6 +24,12 @@ namespace TRABALHO_GRAFOS.Codigo
             set { destino = value; }
         }
 
+        public int Peso
+        {
+            get { return peso; }
+            set { peso = value; }
+        }
+
 
         public Aresta(Vertice origem, Vertice destino, int peso)
         {
@@ -35,6 +41,11 @@ namespace TRABALHO_GRAFOS.Codigo
         public void SubstituiPeso(int peso)
         {
 
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is Aresta aresta && this.origem.Equals(aresta.origem) && this.destino.Equals(aresta.destino) && this.peso == aresta.peso;
         }
     }
 }

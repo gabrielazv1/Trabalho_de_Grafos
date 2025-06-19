@@ -41,8 +41,8 @@ namespace TRABALHO_GRAFOS.Codigo
                 if (a.Destino.id < 0 || a.Destino.id >= matrizGrafo.GetLength(0))
                     throw new ArgumentOutOfRangeException(nameof(a.Destino), "O destino está fora dos limites da matriz de adjacência.");
 
-                if (a.peso <= 0)
-                    throw new ArgumentException("O peso deve ser maior que zero.", nameof(a.peso));
+                if (a.Peso <= 0)
+                    throw new ArgumentException("O peso deve ser maior que zero.", nameof(a.Peso));
 
                 if (matrizGrafo[a.Origem.id, a.Destino.id] != null)
                     throw new InvalidOperationException("A aresta informada já existe.");
@@ -71,7 +71,7 @@ namespace TRABALHO_GRAFOS.Codigo
                 for (int j = 0; j < matrizGrafo.GetLength(1); j++)
                 {
                     if (matrizGrafo[i, j] != null)
-                        Console.Write($"[{matrizGrafo[i, j].peso}] ");
+                        Console.Write($"[{matrizGrafo[i, j].Peso}] ");
                     else
                         Console.Write("[0] ");
                 }

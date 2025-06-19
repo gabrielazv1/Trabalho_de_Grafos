@@ -12,6 +12,35 @@ namespace TRABALHO_GRAFOS.Codigo
         public List<Aresta> arestas = new List<Aresta>();
         public List<Vertice> verticesAdjacentes = new List<Vertice>();
 
+        private int descoberto = 0;
+        private int termino = 0;
+        private bool visitado = false;
+        private Vertice pai = null;
+
+        public Vertice Pai
+        {
+            get { return pai; }
+            set { pai = value; }
+        }
+
+        public bool Visitado
+        {
+            get { return visitado; }
+            set { visitado = value; }
+        }
+
+        public int Descoberto
+        {
+            get { return descoberto; }
+            set { descoberto = value; }
+        }
+
+        public int Termino
+        {
+            get { return termino; }
+            set { termino = value; }
+        }
+
 
         public List<Aresta> Arestas
         {
@@ -24,10 +53,13 @@ namespace TRABALHO_GRAFOS.Codigo
             id = Id;
         }
 
+        public Vertice()
+        {
+        }
+
         public static bool SaoAdjacentes(Vertice v1, Vertice v2)
         {
-            
-            return default;
+            return v1.verticesAdjacentes.Contains(v2);
         }
 
         public override bool Equals(object obj)
