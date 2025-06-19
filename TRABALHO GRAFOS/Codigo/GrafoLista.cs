@@ -6,7 +6,7 @@ namespace TRABALHO_GRAFOS.Codigo
 {
     internal class GrafoLista : Grafo
     {
-        private List<Aresta>[] listaGrafo;
+        public List<Aresta>[] listaGrafo;
 
         public GrafoLista(int vertices)
         {
@@ -56,5 +56,26 @@ namespace TRABALHO_GRAFOS.Codigo
         {
 
         }
+
+        public void ImprimirListaAdjacencia()
+        {
+            for (int i = 0; i < listaGrafo.Length; i++)
+            {
+                Console.Write($"Vértice {i}: ");
+                if (listaGrafo[i].Count > 0)
+                {
+                    foreach (Aresta a in listaGrafo[i])
+                    {
+                        Console.Write($"-> {a.Destino.id} (peso {a.peso}) ");
+                    }
+                }
+                else
+                {
+                    Console.Write("sem conexões");
+                }
+                Console.WriteLine();
+            }
+        }
+
     }
 }

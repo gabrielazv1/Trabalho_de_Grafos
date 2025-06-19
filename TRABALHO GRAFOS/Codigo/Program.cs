@@ -28,26 +28,22 @@ namespace TRABALHO_GRAFOS.Codigo
             {
                 try
                 {
-                    Console.WriteLine(MenuInicial());
-                    if (!int.TryParse(Console.ReadLine(), out opcao))
-                    {
-                        Console.Clear();
-                        Console.WriteLine("Por favor, insira uma das opções acima.");
-                        continue;
-                    }
-                    Console.Clear();
+                    opcao = MenuInicial();
                     switch (opcao)
                     {
                         case 1:
-                            ConstroiGrafo();
+                            Console.Clear();
+                            SelecionaDadosDoGrafo();
                             break;
                         case 2:
-                            ValidaGrafoDIMAC();
+                            Console.Clear();
+                            ImportarGrafoDimacs();
                             break;
                         case 0:
                             return;
                         default:
                             Console.WriteLine("Por favor, insira uma opção válida.");
+                            Pausa();
                             break;
                     }
                 }
@@ -60,38 +56,66 @@ namespace TRABALHO_GRAFOS.Codigo
             }
             while (true);
         }
+        private static int MenuInicial()
+        {
+            Console.Clear();
+            StringBuilder menu = new StringBuilder();
+            Cabecalho("Bem-Vindo ao Trabalho de Grafos!");
+            menu.AppendLine("1 - Construir o Grafo a mão");
+            menu.AppendLine("2 – Importar arquivo DIMACs");
+            menu.AppendLine("0 – Sair");
+            
+            Console.Write(menu.ToString());
+            Separador();
+            return LerInteiro("Escolha uma opção: ");
+        }
 
-        private static Imprime imprimir = new Imprime();
-        private static Busca buscar = new Busca();
-        private static Caminho calcular = new Caminho();
-
-        private static void Cabecalho(string titulo = "Trabalho de Grafos")
+        public static void Cabecalho(string titulo = "Trabalho de Grafos")
         {
             StringBuilder cabecalho = new StringBuilder();
             Console.Clear();
-            cabecalho.AppendLine("================================================");
-            cabecalho.AppendLine($"         {titulo}");
-            cabecalho.AppendLine("================================================\n");
+            cabecalho.Append("\n");
+            Separador();
+            cabecalho.AppendLine($"        {titulo}");
             Console.WriteLine(cabecalho.ToString());
+            Separador();
+            cabecalho.Append("\n");
+        }
+
+        private static void Separador()
+        {
+            StringBuilder separador = new StringBuilder();
+            separador.AppendLine("================================================");
+            Console.Write(separador.ToString());
         }
 
         private static void Pausa()
         {
-            Console.WriteLine("\nPressione ENTER para continuar...");
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("\nPressione ENTER para continuar...");
+            Console.Write(sb.ToString());
             Console.ReadLine();
         }
 
-        private static string MenuInicial()
+        public static int LerInteiro(string mensagem)
         {
-            Console.Clear();
-            StringBuilder menu = new StringBuilder();
-            Cabecalho("Bem-Vindo! Escolha uma opção.");
-            menu.AppendLine("================================================");
-            menu.AppendLine("1 - Construir o Grafo a mão");
-            menu.AppendLine("2 – Importar arquivo DIMAC");
-            menu.AppendLine("0 – Sair");
-            menu.AppendLine("================================================");
-            return menu.ToString();
+            Console.Write($"{mensagem}");
+            string entrada = Console.ReadLine();
+
+            try
+            {
+                return int.Parse(entrada);
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("Favor digitar somente números.");
+                return -1;
+            }
+            catch (OverflowException)
+            {
+                Console.WriteLine("Favor digitar apenas valores do menu.");
+                return -1;
+            }
         }
 
         #endregion
@@ -100,28 +124,28 @@ namespace TRABALHO_GRAFOS.Codigo
         {
             Console.Clear();
             Cabecalho("Menu Principal");
-            Console.WriteLine("1  – Adicionar aresta");
-            Console.WriteLine("2  – Mostrar Grafo como Lista");
-            Console.WriteLine("3  – Mostrar Grafo como Matriz");
-            Console.WriteLine("4  – Imprimir arestas adjacentes a uma aresta");
-            Console.WriteLine("5  – Imprimir vértices adjacentes a um vértice");
-            Console.WriteLine("6  – Imprimir arestas incidentes a um vértice");
-            Console.WriteLine("7  – Imprimir vértices incidentes a uma aresta");
-            Console.WriteLine("8  – Imprimir grau de um vértice");
-            Console.WriteLine("9  – Verificar se dois vértices são adjacentes");
-            Console.WriteLine("10 – Substituir peso de uma aresta");
-            Console.WriteLine("11 – Trocar dois vértices");
-            Console.WriteLine("12 – Busca em Largura (BFS)");
-            Console.WriteLine("13 – Busca em Profundidade (DFS)");
-            Console.WriteLine("14 – Caminho mínimo (Dijkstra)");
-            Console.WriteLine("15 – Caminho mínimo (Floyd‑Warshall)");
-            Console.WriteLine("0  – Voltar");
-            Console.Write("Escolha uma opção: ");
 
-            if (int.TryParse(Console.ReadLine(), out int opcao))
-                return opcao;
+            StringBuilder menu = new StringBuilder();
+            menu.AppendLine("1  – Mostrar Grafo como Lista");
+            menu.AppendLine("2  – Mostrar Grafo como Matriz");
+            menu.AppendLine("3  – Imprimir arestas adjacentes a uma aresta");
+            menu.AppendLine("4  – Imprimir vértices adjacentes a um vértice");
+            menu.AppendLine("5  – Imprimir arestas incidentes a um vértice");
+            menu.AppendLine("6  – Imprimir vértices incidentes a uma aresta");
+            menu.AppendLine("7  – Imprimir grau de um vértice");
+            menu.AppendLine("8  – Verificar se dois vértices são adjacentes");
+            menu.AppendLine("9  – Substituir peso de uma aresta");
+            menu.AppendLine("10 – Trocar dois vértices");
+            menu.AppendLine("11 – Busca em Largura (BFS)");
+            menu.AppendLine("12 – Busca em Profundidade (DFS)");
+            menu.AppendLine("13 – Caminho mínimo (Dijkstra)");
+            menu.AppendLine("14 – Caminho mínimo (Floyd-Warshall)");
+            menu.AppendLine("0  – Voltar");
+            
+            Console.Write(menu.ToString());
+            Separador();
 
-            return -1;
+            return LerInteiro("Escolha uma opção: ");
         }
 
         private static void ControlarOperacoes(IGrafo grafo)
@@ -140,27 +164,56 @@ namespace TRABALHO_GRAFOS.Codigo
 
                 switch (opcao)
                 {
-                    case 1: AdicionaAresta(grafo); break;
-                    case 2: ImprimirListaAdj(grafo); break;
-                    case 3: ImprimirMatrizAdj(grafo); break;
-                    case 4: ImprimirArestasAdjacentes(grafo); break;
-                    case 5: ImprimirVerticesAdjacentes(grafo); break;
-                    case 6: ImprimirArestasIncidentes(grafo); break;
-                    case 7: ImprimirVerticesIncidentesaAresta(grafo); break;
-                    case 8: ImprimirGrauVertice(grafo); break;
-                    case 9: VerificarAdjacenciaVertices(grafo); break;
-                    case 10: SubstituirPesoAresta(grafo); break;
-                    case 11: TrocarVertices(grafo); break;
-                    case 12: ExecutarBfs(grafo); break;
-                    case 13: ExecutarDfs(grafo); break;
-                    case 14: ExecutarDijkstra(grafo); break;
-                    case 15: ExecutarFloydWarshall(grafo); break;
+                    case 1:
+                        if (grafo is GrafoLista glista)
+                        {
+                            Console.Clear();
+                            Cabecalho("Lista de Adjacência");
+                            glista.ImprimirListaAdjacencia();
+                            Separador();
+                        }
+
+                        else
+                        {
+                            Console.Clear();
+                            Separador();
+                            Console.WriteLine("Este grafo não usa lista de adjacência.");
+                            Separador();
+                        }
+                            
+                        break;
+                    case 2:
+                        if (grafo is GrafoMatriz gmatriz)
+                        {
+                            Console.Clear();
+                            Cabecalho("Matriz de Adjacência");
+                            gmatriz.ImprimirMatrizAdjacencia();
+                            Separador();
+                        }
+
+                        else
+                        {
+                            Console.Clear();
+                            Separador();
+                            Console.WriteLine("Este grafo não usa matriz de adjacência.");
+                            Separador();
+                        }
+                            
+                        break;
+                    case 3: ImprimirArestasAdjacentes(grafo); break;
+                    case 4: ImprimirVerticesAdjacentes(grafo); break;
+                    case 5: ImprimirArestasIncidentes(grafo); break;
+                    case 6: ImprimirVerticesIncidentesaAresta(grafo); break;
+                    case 7: ImprimirGrauVertice(grafo); break;
+                    case 8: VerificarAdjacenciaVertices(grafo); break;
+                    case 9: SubstituirPesoAresta(grafo); break;
+                    case 10: TrocarVertices(grafo); break;
+                    case 11: ExecutarBfs(grafo); break;
+                    case 12: ExecutarDfs(grafo); break;
+                    case 13: ExecutarDijkstra(grafo); break;
+                    case 14: ExecutarFloydWarshall(grafo); break;
                     case 0:
                         Console.Clear();
-                        Console.WriteLine("Saindo do menu...");
-                        break;
-                    default:
-                        Console.WriteLine("Opção inválida.");
                         break;
                 }
 
@@ -169,117 +222,59 @@ namespace TRABALHO_GRAFOS.Codigo
 
             } while (opcao != 0);
         }
-
-        public static int LerInteiro(string mensagem)
-        {
-            int opcao;
-            Console.Write($"{mensagem}: ");
-            try
-            {
-                opcao = int.Parse(Console.ReadLine());
-            }
-            catch (FormatException)
-            {
-                opcao = -1;
-                Console.WriteLine("Favor digitar somente números.");
-            }
-            catch (OverflowException)
-            {
-                opcao = -1;
-                Console.WriteLine("Favor digitar somente valores do menu.");
-            }
-            return opcao;
-        }
         #endregion
-        #region Métodos do Menu Principal
-        public static bool AdicionaAresta(IGrafo grafo)
-        {
-            try
-            {
-                Console.Clear();
-                Console.WriteLine("Insira o número do vértice de origem:");
-                if (!int.TryParse(Console.ReadLine(), out int verticeOrigem))
-                {
-                    Console.WriteLine("Vértice de origem inválido.");
-                    Pausa();
-                    return false;
-                }
-
-                Console.WriteLine("Insira o número do vértice de destino:");
-                if (!int.TryParse(Console.ReadLine(), out int verticeDestino))
-                {
-                    Console.WriteLine("Vértice de destino inválido.");
-                    Pausa();
-                    return false;
-                }
-
-                Console.WriteLine("Insira o peso da aresta:");
-                if (!int.TryParse(Console.ReadLine(), out int peso))
-                {
-                    Console.WriteLine("Peso inválido.");
-                    Pausa();
-                    return false;
-                }
-                Aresta a = new Aresta(new Vertice(verticeOrigem), new Vertice(verticeDestino), peso);
-                if (grafo.AdicionarAresta(a))
-                {
-                    Console.Clear();
-                    Console.WriteLine("Aresta adicionada com sucesso.");
-                }
-                else
-                {
-                    Console.Clear();
-                    Console.WriteLine("Erro ao adicionar a aresta. Verifique os vértices.");
-                    Pausa();
-                    return false;
-                }
-                Pausa();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Erro ao adicionar aresta: {ex.Message}");
-                Pausa();
-                return false;
-            }
-        }
-        private static void ConstroiGrafo()
+        #region Métodos de Criação do Grafo
+        private static void SelecionaDadosDoGrafo()
         {
             
             try
             {
                 Console.Clear();
-                Cabecalho("Construção do Grafo");
-                Console.WriteLine("Informe a quantidade de vértices:");
+                Cabecalho("Capturando Dados para Construir Grafo");
+                Console.Write("Informe a quantidade de vértices: ");
                 if (!int.TryParse(Console.ReadLine(), out int numVertices) || numVertices <= 0)
                 {
-                    Console.WriteLine("Número de vértices inválido.");
+                    Console.Write("Número de vértices inválido.");
                     return;
                 }
-
-                Console.WriteLine("Informe a quantidade de arestas:");
+                Separador();
+                Console.Write("Informe a quantidade de arestas: ");
                 if (!int.TryParse(Console.ReadLine(), out int numArestas) || numArestas < 0)
                 {
-                    Console.WriteLine("Número de arestas inválido.");
+                    Console.Write("Número de arestas inválido.");
                     return;
                 }
-
+                Separador();
                 Console.Clear();
-                List<List<int>> dimac = ConstruirDimac(numVertices, numArestas);
+                List<List<int>> arestasLidas = ConstruirGrafo(numVertices, numArestas);
 
                 IGrafo grafo;
-
+                Separador();
                 if (CalculaDensidade(numVertices, numArestas) >= 0.5)
                 {
-                    grafo = new GrafoMatriz(numVertices, dimac);
+                    grafo = new GrafoMatriz(numVertices, arestasLidas);
+                    Console.Clear();
+                    Separador();
+                    Console.WriteLine("Criando grafo em formato de MATRIZ\n"
+                                    + "de acordo com o cálculo da densidade...");
+                    Separador();
+                    Pausa();
                 }
                 else
                 {
-                    grafo = new GrafoLista(numVertices, dimac);
+                    grafo = new GrafoLista(numVertices, arestasLidas);
+                    Console.Clear();
+                    Separador();
+                    Console.WriteLine("Criando grafo em formato de LISTA\n" 
+                                    + "de acordo com o cálculo da densidade...");
+                    Separador();
+                    Pausa();
                 }
 
                 Console.Clear();
+                Separador();
                 Console.WriteLine("Grafo criado com sucesso!");
+                Separador();
                 Pausa();
                 ControlarOperacoes(grafo);
             }
@@ -288,61 +283,43 @@ namespace TRABALHO_GRAFOS.Codigo
 
                 Console.WriteLine($"Erro ao criar grafo: {ex.Message}");
             }
-
-            //criar uma lista de vertices adjacentes
-            //Definir se o grafo é direcionado ou não
-            //Informar se as arestas têm direção(grafo direcionado) ou não(grafo não direcionado).
-
-            //Definir se o grafo é ponderado ou não
-            //Informar se as arestas possuem pesos(grafo ponderado) ou não.
-
-            //Adicionar os vértices
-            //Inserir os vértices no grafo com seus identificadores ou dados.
-
-            //Adicionar as arestas
-            //Inserir as conexões entre os vértices, informando peso e direção se necessário.
-
-            //Definir o tipo de representação
-            //Escolher se o grafo será representado por lista de adjacência, matriz de adjacência ou matriz de incidência.
-
-            //Inicializar o grafo
-            //Criar a instância do grafo com base na representação escolhida(por exemplo, inicializar listas ou matrizes).
         }
 
-        public static List<List<int>> ConstruirDimac(int numVertices, int numArestas)
+        public static List<List<int>> ConstruirGrafo(int numVertices, int numArestas)
         {
             List<List<int>> dimac = new List<List<int>>();
 
+            
             for (int i = 1; i <= numArestas; i++)
             {
                 try
                 {
-                    Cabecalho("Construção do Grafo DIMAC");
-                    Console.WriteLine($"Informe o vértice de origem da aresta {i} (0 a {numVertices - 1}):");
+                    Cabecalho("Construção do Grafo");
+                    Console.Write($"Informe o vértice de origem da aresta {i} (0 a {numVertices - 1}): ");
                     if (!int.TryParse(Console.ReadLine(), out int verticeOrigem) || verticeOrigem < 0 || verticeOrigem >= numVertices)
                     {
                         Console.WriteLine("Vértice de origem inválido.");
                         i--;
                         continue;
                     }
-
-                    Console.WriteLine($"Informe o vértice de destino da aresta {i} (0 a {numVertices - 1}):");
+                    Separador();
+                    Console.Write($"Informe o vértice de destino da aresta {i} (0 a {numVertices - 1}): ");
                     if (!int.TryParse(Console.ReadLine(), out int verticeDestino) || verticeDestino < 0 || verticeDestino >= numVertices)
                     {
                         Console.WriteLine("Vértice de destino inválido.");
                         i--;
                         continue;
                     }
-
-                    Console.WriteLine($"Informe o peso da aresta {i}:");
+                    Separador();
+                    Console.Write($"Informe o peso da aresta {i}: ");
                     if (!int.TryParse(Console.ReadLine(), out int peso) || peso < 0)
                     {
                         Console.WriteLine("Peso inválido.");
                         i--;
                         continue;
                     }
-
-                    dimac.Add(new List<int> { verticeOrigem, verticeDestino, peso });
+                    Console.WriteLine();
+                    dimac.Add(new List<int> { verticeOrigem, verticeDestino, peso});
                 }
                 catch (Exception ex)
                 {
@@ -354,25 +331,37 @@ namespace TRABALHO_GRAFOS.Codigo
             return dimac;
         }
 
-        public static void ValidaGrafoDIMAC()
+        public static void ImportarGrafoDimacs()
         {
             try
             {
-                Console.Write("Caminho do arquivo DIMACS: ");
+                Separador();
+                Console.Write("Caminho do arquivo DIMACs: ");
                 string caminhoArquivo = Console.ReadLine();
-                if (!File.Exists(caminhoArquivo))
+
+                if (string.IsNullOrWhiteSpace(caminhoArquivo))
                 {
-                    Console.WriteLine("Arquivo não encontrado.");
+                    Console.WriteLine("O caminho informado está vazio ou inválido.");
+                    Pausa();
                     return;
                 }
 
+                if (!File.Exists(caminhoArquivo))
+                {
+                    Console.WriteLine("Arquivo não encontrado. Verifique se o caminho está correto.");
+                    Pausa();
+                    return;
+                }
+
+                Separador();
                 string[] linhas = File.ReadAllLines(caminhoArquivo)
                                       .Where(l => !string.IsNullOrWhiteSpace(l))
                                       .ToArray();
 
                 if (linhas.Length < 1)
                 {
-                    Console.WriteLine("Arquivo DIMACS inválido.");
+                    Console.WriteLine("Arquivo DIMACs inválido.");
+                    Pausa();
                     return;
                 }
 
@@ -382,10 +371,11 @@ namespace TRABALHO_GRAFOS.Codigo
                     !int.TryParse(primeiraLinha[1], out int numArestas))
                 {
                     Console.WriteLine($"Formato inválido na primeira linha: {linhas[0]}");
+                    Pausa();
                     return;
                 }
 
-                List<List<int>> dimac = new List<List<int>>();
+                List<List<int>> dimacs = new List<List<int>>();
 
                 for (int i = 1; i < linhas.Length; i++)
                 {
@@ -416,23 +406,36 @@ namespace TRABALHO_GRAFOS.Codigo
 
                     verticeDestino--;
                     verticeOrigem--;
-                    dimac.Add(new List<int> { verticeOrigem, verticeDestino, peso });
+                    dimacs.Add(new List<int> { verticeOrigem, verticeDestino, peso });
                 }
 
                 IGrafo grafo;
                 if (CalculaDensidade(numVertices, numArestas) >= 0.5)
                 {
-                    grafo = new GrafoMatriz(numVertices, dimac);
+                    grafo = new GrafoMatriz(numVertices, dimacs);
+                    Console.Clear();
+                    Separador();
+                    Console.WriteLine("Criando grafo em formato de MATRIZ\n"
+                                    + "de acordo com o cálculo da densidade...");
+                    Separador();
+                    Pausa();
                 }
                 else
                 {
-                    grafo = new GrafoLista(numVertices, dimac);
+                    grafo = new GrafoLista(numVertices, dimacs);
+                    Console.Clear();
+                    Separador();
+                    Console.WriteLine("Criando grafo em formato de LISTA\n"
+                                    + "de acordo com o cálculo da densidade...");
+                    Separador();
+                    Pausa();
                 }
 
                 Console.Clear();
+                Separador();
                 Console.WriteLine("Grafo criado com sucesso!");
-                
-                Console.ReadLine();
+                Separador();
+                Pausa();
                 Console.Clear();
                 ControlarOperacoes(grafo);
             }
@@ -440,7 +443,6 @@ namespace TRABALHO_GRAFOS.Codigo
             {
                 Console.WriteLine($"Erro ao criar grafo: {ex.Message}");
                 Pausa();
-                Console.ReadLine();
             }
         }
 
@@ -449,7 +451,10 @@ namespace TRABALHO_GRAFOS.Codigo
             double densidade = (2 * numArestas) / (numVertices * (numVertices - 1));
             return densidade;
         }
-        
+        #endregion
+        #region Métodos do Menu Principal
+
+
         //private static Vertice ObterVerticePorId(IGrafo grafo)
         //{
         //    //int id = lerInteiro("ID do vértice");
@@ -581,7 +586,6 @@ namespace TRABALHO_GRAFOS.Codigo
             //Pausa();
         }
         #endregion
-
     }
 }
 

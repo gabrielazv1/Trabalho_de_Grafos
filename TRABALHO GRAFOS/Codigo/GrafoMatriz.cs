@@ -9,21 +9,18 @@ namespace TRABALHO_GRAFOS.Codigo
 {
     internal class GrafoMatriz : IGrafo
     {
-        private int[,] matrizGrafo;
-
-        public GrafoMatriz(int vertices)
-        {
-            matrizGrafo = new int[vertices, vertices];
-        }
+        private Aresta[,] matrizGrafo;
         public GrafoMatriz(int vertices, List<List<int>> listaArestas)
         {
-            int[,] matrizAdjacencia = new int[vertices, vertices];
-
+            matrizGrafo = new Aresta[vertices, vertices];
             foreach (List<int> aresta in listaArestas)
             {
-                matrizAdjacencia[aresta[0], aresta[1]] = aresta[2];
+                int origem = aresta[0];
+                int destino = aresta[1];
+                int peso = aresta[2];
+
+                matrizGrafo[origem, destino] = new Aresta(new Vertice(origem), new Vertice(destino), peso);
             }
-            matrizGrafo = matrizAdjacencia;
         }
         public void TrocaDoisVertices(Vertice v1, Vertice v2)
         {
@@ -39,23 +36,24 @@ namespace TRABALHO_GRAFOS.Codigo
             try
             {
                 if (a.Origem.id < 0 || a.Origem.id >= matrizGrafo.GetLength(0))
-                    throw new ArgumentOutOfRangeException(nameof(a.origem), "O vértice está fora dos limites da matriz de adjacência.");
+                    throw new ArgumentOutOfRangeException(nameof(a.Origem), "O vértice está fora dos limites da matriz de adjacência.");
 
                 if (a.Destino.id < 0 || a.Destino.id >= matrizGrafo.GetLength(0))
-                    throw new ArgumentOutOfRangeException(nameof(a.destino), "O destino está fora dos limites da matriz de adjacência.");
+                    throw new ArgumentOutOfRangeException(nameof(a.Destino), "O destino está fora dos limites da matriz de adjacência.");
 
                 if (a.peso <= 0)
                     throw new ArgumentException("O peso deve ser maior que zero.", nameof(a.peso));
 
-                if (matrizGrafo[a.Origem.id, a.Destino.id] > 0)
-                    throw new ArgumentOutOfRangeException(nameof(a.destino), "A aresta informada já existe");
+                if (matrizGrafo[a.Origem.id, a.Destino.id] != null)
+                    throw new InvalidOperationException("A aresta informada já existe.");
 
-                matrizGrafo[a.Origem.id, a.Destino.id] = a.peso;
+                matrizGrafo[a.Origem.id, a.Destino.id] = a;
                 return true;
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Erro: {ex.Message}"); return false;
+                Console.WriteLine($"Erro: {ex.Message}");
+                return false;
             }
         }
 
@@ -63,5 +61,23 @@ namespace TRABALHO_GRAFOS.Codigo
         {
 
         }
+
+        public void ImprimirMatrizAdjacencia()
+        {
+            Console.WriteLine("Matriz de Adjacência:");
+            for (int i = 0; i < matrizGrafo.GetLength(0); i++)
+            {
+                Console.Write($"Vértice {i}: ");
+                for (int j = 0; j < matrizGrafo.GetLength(1); j++)
+                {
+                    if (matrizGrafo[i, j] != null)
+                        Console.Write($"[{matrizGrafo[i, j].peso}] ");
+                    else
+                        Console.Write("[0] ");
+                }
+                Console.WriteLine();
+            }
+        }
+
     }
 }

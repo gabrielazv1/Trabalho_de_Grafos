@@ -9,11 +9,12 @@ namespace TRABALHO_GRAFOS.Codigo
 {
     internal class Grafo : IGrafo
     {
-        public Dictionary<Vertice, List<Aresta>> DicGrafo { get; private set; }
-
+        internal Dictionary<Vertice, List<Aresta>> DicGrafo { get; private set; }
+        public int NumeroDeVertices { get; private set; }
         public Grafo()
         {
             DicGrafo = new Dictionary<Vertice, List<Aresta>>();
+            NumeroDeVertices = 0;
         }
 
         public bool AdicionarVertice(Vertice v)
