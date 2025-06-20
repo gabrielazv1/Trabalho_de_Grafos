@@ -79,14 +79,14 @@ namespace TRABALHO_GRAFOS.Codigo
 
         public void Imprimir()
         {
-            foreach (var par in DicGrafo)
+            foreach (KeyValuePair<Vertice, List<Aresta>> par in DicGrafo)
             {
-                Console.Write($"Vértice {par.Key.id}: ");
+                Console.Write($"Vértice {par.Key.id + 1}: ");
                 if (par.Value.Count > 0)
                 {
                     foreach (var aresta in par.Value)
                     {
-                        Console.Write($"-> {aresta.Destino.id} (peso {aresta.Peso}) ");
+                        Console.Write($"-> {aresta.Destino.id + 1} (peso {aresta.Peso}) ");
                     }
                 }
                 else

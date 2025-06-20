@@ -220,7 +220,7 @@ namespace TRABALHO_GRAFOS.Codigo
                             }
                             Separador();
 
-                            Imprime.ImprimirArestasAdj(verticeOrigem, verticeDestino, grafo);
+                            Imprime.ImprimirArestasAdj(verticeOrigem -1, verticeDestino-1, grafo);
                             Separador();
                         }
                         catch (Exception ex) { Console.WriteLine(ex.Message + "\nPressione ENTER para continuar..."); }
@@ -239,7 +239,7 @@ namespace TRABALHO_GRAFOS.Codigo
 
                             Separador();
 
-                            Imprime.ImprimirVerticesAdj(grafo, id_verticeV);
+                            Imprime.ImprimirVerticesAdj(grafo, id_verticeV-1);
                         }
                         catch (Exception ex) { Console.WriteLine(ex.Message + "\nPressione ENTER para continuar..."); }
 
@@ -260,7 +260,7 @@ namespace TRABALHO_GRAFOS.Codigo
 
                             Console.Clear();
                             Separador();
-                            Imprime.ImprimirArestasInc(vertice, grafo);
+                            Imprime.ImprimirArestasInc(vertice - 1, grafo);
                             Separador();
                         }
                         catch (Exception ex) { Console.WriteLine(ex.Message + " Aperte ENTER para continuar"); }
@@ -288,7 +288,7 @@ namespace TRABALHO_GRAFOS.Codigo
                             }
                             Separador();
 
-                            Imprime.ImprimirVerticeInc(grafo, id_verticeOrigem, id_verticeDestino);
+                            Imprime.ImprimirVerticeInc(grafo, id_verticeOrigem -1, id_verticeDestino - 1);
                         }
                         catch (Exception ex) { Console.WriteLine(ex.Message + "\nPressione ENTER para continuar..."); }
 
@@ -310,7 +310,7 @@ namespace TRABALHO_GRAFOS.Codigo
 
                             Console.Clear();
                             Separador();
-                            Imprime.ImprimirGrau(vertice, grafo);
+                            Imprime.ImprimirGrau(vertice - 1, grafo);
                             Separador();
                         }
                         catch (Exception ex) { Console.WriteLine(ex.Message + " Aperte ENTER para continuar"); }
@@ -323,14 +323,14 @@ namespace TRABALHO_GRAFOS.Codigo
                             Console.Clear();
                             Separador();
 
-                            Console.Write("Informe o vértice V1: ");
+                            Console.Write("Informe o vértice ORIGEM: ");
 
                             if (!int.TryParse(Console.ReadLine(), out int id_v1))
                             {
                                 throw new Exception("Entrada inválida, a entrada deve ser um número inteiro.");
                             }
                             Separador();
-                            Console.Write("Informe o vértice V2: ");
+                            Console.Write("Informe o vértice DESTINO: ");
 
                             if (!int.TryParse(Console.ReadLine(), out int id_v2))
                             {
@@ -338,8 +338,8 @@ namespace TRABALHO_GRAFOS.Codigo
                             }
                             Separador();
 
-                            Vertice v1 = new Vertice(id_v1);
-                            Vertice v2 = new Vertice(id_v2);
+                            Vertice v1 = new Vertice(id_v1 -1);
+                            Vertice v2 = new Vertice(id_v2 -1);
 
                             Imprime.ImprimirAdjacentes(v1, v2, grafo);
                         }
@@ -382,7 +382,7 @@ namespace TRABALHO_GRAFOS.Codigo
                             Console.Clear();
 
                             Separador();
-                            Imprime.TrocarPesoArestas(verticeOrigem, verticeDestino, peso, grafo);
+                            Imprime.TrocarPesoArestas(verticeOrigem - 1, verticeDestino - 1, peso, grafo);
                             Separador();
                         }
                         catch (Exception ex) { Console.WriteLine(ex.Message + "Aperte ENTER para continuar..."); }
@@ -415,7 +415,7 @@ namespace TRABALHO_GRAFOS.Codigo
                             Vertice v1 = new Vertice(id_v1);
                             Vertice v2 = new Vertice(id_v2);
 
-                            Imprime.ImprimirTrocaVertices(grafo, id_v1, id_v2);
+                            Imprime.ImprimirTrocaVertices(grafo, id_v1 - 1, id_v2 -1);
                         }
                         catch (Exception ex) { Console.WriteLine(ex.Message + "\nPressione ENTER para continuar..."); }
 
@@ -436,7 +436,7 @@ namespace TRABALHO_GRAFOS.Codigo
 
                             Console.Clear();
                             Separador();
-                            Imprime.ImprimirBuscaLargura(grafo, vertice);
+                            Imprime.ImprimirBuscaLargura(grafo, vertice - 1);
                             Separador();
                         }
                         catch (Exception ex) { Console.WriteLine(ex.Message + " Aperte ENTER para continuar"); }
@@ -457,7 +457,7 @@ namespace TRABALHO_GRAFOS.Codigo
                             }
                             Separador();
 
-                            Imprime.ImprimirBuscaProfundidade(grafo, idVraiz);
+                            Imprime.ImprimirBuscaProfundidade(grafo, idVraiz-1);
                         }
                         catch (Exception ex) { Console.WriteLine(ex.Message + "\nPressione ENTER para continuar..."); }
 
@@ -476,6 +476,8 @@ namespace TRABALHO_GRAFOS.Codigo
                                 throw new Exception("Entrada inválida, a entrada deve ser um número inteiro.");
                             }
 
+                            Separador();
+
                             Console.Write("Informe o vértice de DESTINO: ");
 
                             if (!int.TryParse(Console.ReadLine(), out int verticeDestino))
@@ -484,7 +486,7 @@ namespace TRABALHO_GRAFOS.Codigo
                             }
                             Console.Clear();
                             Separador();
-                            Imprime.ImprimirDijkstra(verticeOrigem, verticeDestino, grafo);
+                            Imprime.ImprimirDijkstra(verticeOrigem -1, verticeDestino-1, grafo);
                             Separador();
                         }
                         catch (Exception ex) { Console.WriteLine(ex.Message + " Aperte ENTER para continuar"); }
@@ -506,7 +508,7 @@ namespace TRABALHO_GRAFOS.Codigo
                             }
                             Separador();
 
-                            Imprime.ImprimirFloydWarshal(grafo, id_vertOrigem);
+                            Imprime.ImprimirFloydWarshal(grafo, id_vertOrigem-1);
                         }
                         catch (Exception ex) { Console.WriteLine(ex.Message + "\nPressione ENTER para continuar..."); }
 

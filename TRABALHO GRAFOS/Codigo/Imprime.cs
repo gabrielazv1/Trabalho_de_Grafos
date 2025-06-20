@@ -14,7 +14,7 @@ namespace TRABALHO_GRAFOS.Codigo
             for (int i = 0; i < GrafoLista.listaGrafo.Length; i++)
             {
                 Console.Write($"Vértice {i + 1} ");
-                if (GrafoLista.listaGrafo[i].Count > 0)
+                if (GrafoLista.listaGrafo[i].Count >= 0)
                 {
                     foreach (Aresta a in GrafoLista.listaGrafo[i])
                     {
@@ -28,6 +28,7 @@ namespace TRABALHO_GRAFOS.Codigo
                 Console.WriteLine();
             }
         }
+
         public static void ImprimirMatrizAdj()
         {
             Console.WriteLine("Matriz de Adjacência:");
@@ -53,21 +54,19 @@ namespace TRABALHO_GRAFOS.Codigo
             if (vOrigem == null || vDestino == null)
                 throw new Exception("Um ou ambos os vértices não existem no grafo.");
 
-            Console.WriteLine($"Arestas adjacentes ao vértice {vOrigem.id}:");
-
+            Console.WriteLine($"Arestas adjacentes ao vértice {vOrigem.id + 1}:");
 
             foreach (Aresta aresta in grafo.DicGrafo[vOrigem])
             {
-                Console.WriteLine($"({aresta.Origem.id}, {aresta.Destino.id}) - peso {aresta.Peso}");
+                Console.WriteLine($"({aresta.Origem.id + 1}, {aresta.Destino.id + 1}) - peso {aresta.Peso}");
             }
 
-            Console.WriteLine($"\nArestas adjacentes ao vértice {vDestino.id}:");
+            Console.WriteLine($"\nArestas adjacentes ao vértice {vDestino.id + 1}:");
             foreach (Aresta aresta in grafo.DicGrafo[vDestino])
             {
-                Console.WriteLine($"({aresta.Origem.id}, {aresta.Destino.id}) - peso {aresta.Peso}");
+                Console.WriteLine($"({aresta.Origem.id + 1}, {aresta.Destino.id + 1}) - peso {aresta.Peso}");
             }
         }
-
 
         public static void ImprimirVerticesAdj(Grafo grafo, int idVertice)
         {
@@ -79,11 +78,11 @@ namespace TRABALHO_GRAFOS.Codigo
 
             if (arestas.Count == 0) { throw new Exception("Não existem vértices adjacentes ao vértice informado."); }
 
-            Console.WriteLine($"Vértices adjacentes ao vértice {idVertice}: ");
+            Console.WriteLine($"Vértices adjacentes ao vértice {idVertice + 1}: ");
 
             foreach (Aresta a in arestas)
             {
-                Console.WriteLine($"Vértice {a.Destino.id} - Peso: {a.Peso}");
+                Console.WriteLine($"Vértice {a.Destino.id + 1} - Peso: {a.Peso}");
             }
         }
 
@@ -98,15 +97,15 @@ namespace TRABALHO_GRAFOS.Codigo
                     throw new Exception("Vértice não encontrado com o ID informado.");
                 }
 
-                Console.WriteLine($"Arestas incidentes ao vértice {idVertice}");
+                Console.WriteLine($"Arestas incidentes ao vértice {idVertice + 1}");
 
-                foreach (var listaArestas in grafo.DicGrafo.Values)
+                foreach (List<Aresta> listaArestas in grafo.DicGrafo.Values)
                 {
-                    foreach (var aresta in listaArestas)
+                    foreach (Aresta aresta in listaArestas)
                     {
                         if (aresta.Destino.id == idVertice)
                         {
-                            Console.WriteLine($"({aresta.Origem.id}, {aresta.Destino.id}) - Peso: {aresta.Peso}");
+                            Console.WriteLine($"({aresta.Origem.id + 1}, {aresta.Destino.id + 1}) - Peso: {aresta.Peso}");
                         }
                     }
                 }
@@ -126,7 +125,7 @@ namespace TRABALHO_GRAFOS.Codigo
                 throw new Exception("Aresta não encontrada no grafo.");
 
             Console.WriteLine("Vértices incidentes à aresta:");
-            Console.WriteLine($" Origem: {a.Origem.id} - Destino: {a.Destino.id}");
+            Console.WriteLine($" Origem: {a.Origem.id + 1} - Destino: {a.Destino.id + 1}");
         }
 
         public static void ImprimirGrau(int idVertice, Grafo grafo)
@@ -142,12 +141,11 @@ namespace TRABALHO_GRAFOS.Codigo
 
                 List<Aresta> a = grafo.DicGrafo[v];
 
-                Console.WriteLine($"Grau do vértice {v.id} é {a.Count}");
+                Console.WriteLine($"Grau do vértice {v.id + 1} é {a.Count}");
 
             }
             catch (Exception ex) { Console.WriteLine(ex.Message + "Aperte ENTER para continuar"); }
         }
-
 
         public static void TrocarPesoArestas(int verticeOrigem, int verticeDestino, int peso, Grafo grafo)
         {
@@ -157,13 +155,11 @@ namespace TRABALHO_GRAFOS.Codigo
             {
                 if (aresta.Destino.id == verticeDestino)
                 {
-
-                    Console.WriteLine($"A aresta ({verticeOrigem}, {verticeDestino}) teve o seu peso alterado de {aresta.Peso} para {peso}!");
+                    Console.WriteLine($"A aresta ({verticeOrigem + 1}, {verticeDestino + 1}) teve o seu peso alterado de {aresta.Peso} para {peso}!");
                     aresta.Peso = peso;
                 }
             }
         }
-
 
         public static void ImprimirBuscaLargura(Grafo grafo, int idVerticeInicial)
         {
@@ -172,7 +168,7 @@ namespace TRABALHO_GRAFOS.Codigo
             if (vInicial == null)
                 throw new Exception("Vértice inicial não encontrado.");
 
-            foreach (var vertice in grafo.DicGrafo.Keys)
+            foreach (Vertice vertice in grafo.DicGrafo.Keys)
             {
                 vertice.Visitado = false;
                 vertice.Pai = null;
@@ -192,15 +188,15 @@ namespace TRABALHO_GRAFOS.Codigo
             {
                 Vertice v = fila.Dequeue();
 
-                var vizinhos = grafo.DicGrafo[v]
+                IOrderedEnumerable<Vertice> vizinhos = grafo.DicGrafo[v]
                     .Select(a => grafo.DicGrafo.Keys.First(dest => dest.id == a.Destino.id))
                     .OrderBy(vert => vert.id);
 
-                foreach (var w in vizinhos)
+                foreach (Vertice w in vizinhos)
                 {
                     if (w.Descoberto == 0)
                     {
-                        Console.WriteLine($"Aresta árvore: ({v.id}, {w.id})");
+                        Console.WriteLine($"Aresta árvore: ({v.id + 1}, {w.id + 1})");
                         w.Pai = v;
                         w.Nivel = v.Nivel + 1;
                         w.Descoberto = tempo++;
@@ -208,28 +204,28 @@ namespace TRABALHO_GRAFOS.Codigo
                     }
                     else if (w.Nivel == v.Nivel + 1)
                     {
-                        Console.WriteLine($"Aresta tio: ({v.id}, {w.id})");
+                        Console.WriteLine($"Aresta tio: ({v.id + 1}, {w.id + 1})");
                     }
                     else if (w.Nivel == v.Nivel && v.Pai == w.Pai && w.Descoberto > v.Descoberto)
                     {
-                        Console.WriteLine($"Aresta irmão: ({v.id}, {w.id})");
+                        Console.WriteLine($"Aresta irmão: ({v.id + 1}, {w.id + 1})");
                     }
                     else if (w.Nivel == v.Nivel && v.Pai != w.Pai && w.Descoberto > v.Descoberto)
                     {
-                        Console.WriteLine($"Aresta primo: ({v.id}, {w.id})");
+                        Console.WriteLine($"Aresta primo: ({v.id + 1}, {w.id + 1})");
                     }
                 }
             }
 
             Console.WriteLine("================================================\nRESULTADO FINAL:\n================================================");
 
-            foreach (var v in grafo.DicGrafo.Keys.OrderBy(v => v.id))
+            foreach (Vertice v in grafo.DicGrafo.Keys.OrderBy(v => v.id))
             {
-                Console.Write($"Vértice {v.id} - Nível: {v.Nivel}, Pai: ");
+                Console.Write($"Vértice {v.id + 1} - Nível: {v.Nivel}, Pai: ");
 
                 if (v.Pai != null)
                 {
-                    Console.Write($"{v.Pai.id}\n");
+                    Console.Write($"{v.Pai.id + 1}\n");
                 }
                 else
                 {
@@ -258,10 +254,10 @@ namespace TRABALHO_GRAFOS.Codigo
             Console.WriteLine("RESULTADO FINAL:\n================================================");
             foreach (Vertice v in grafo.DicGrafo.Keys.OrderBy(v => v.id))
             {
-                Console.WriteLine($" Vértice {v.id} --> Tempo de Descoberta: {v.Descoberto} - Tempo de Término: {v.Termino} - Pai: ");
+                Console.WriteLine($" Vértice {v.id + 1} --> Tempo de Descoberta: {v.Descoberto} - Tempo de Término: {v.Termino} - Pai: ");
                 if (v.Pai != null)
                 {
-                    Console.Write($"{v.Pai.id}\n");
+                    Console.Write($"{v.Pai.id + 1}\n");
                 }
                 else
                 {
@@ -304,7 +300,7 @@ namespace TRABALHO_GRAFOS.Codigo
                 return;
             }
 
-            foreach (var v in grafo.DicGrafo.Keys)
+            foreach (Vertice v in grafo.DicGrafo.Keys)
             {
                 v.Distancia = int.MaxValue;
                 v.Pai = null;
@@ -357,7 +353,7 @@ namespace TRABALHO_GRAFOS.Codigo
                 return;
             }
 
-            Console.WriteLine($"Caminho mínimo de {idOrigem} até {idDestino}:");
+            Console.WriteLine($"Caminho mínimo de {idOrigem + 1} até {idDestino + 1}:");
 
             int pesoTotal = 0;
             for (int i = 0; i < caminho.Count - 1; i++)
@@ -369,14 +365,13 @@ namespace TRABALHO_GRAFOS.Codigo
 
                 if (a != null)
                 {
-                    Console.WriteLine($"({de.id} -> {para.id}) - Peso: {a.Peso}");
+                    Console.WriteLine($"({de.id + 1} -> {para.id + 1}) - Peso: {a.Peso}");
                     pesoTotal += a.Peso;
                 }
             }
             Console.WriteLine("================================================");
             Console.WriteLine($"Custo do menor caminho: {pesoTotal}");
         }
-
 
         public static void ImprimirFloydWarshal(Grafo grafo, int idVerticeOrigem)
         {
@@ -393,10 +388,10 @@ namespace TRABALHO_GRAFOS.Codigo
                 for (int j = 0; j < n; j++)
                     dist[i, j] = (i == j) ? 0 : INF;
 
-            foreach (var par in grafo.DicGrafo)
+            foreach (KeyValuePair<Vertice, List<Aresta>> par in grafo.DicGrafo)
             {
                 int i = indexMatriz[par.Key.id];
-                foreach (var aresta in par.Value)
+                foreach (Aresta aresta in par.Value)
                 {
                     int j = indexMatriz[aresta.Destino.id];
                     dist[i, j] = aresta.Peso;
@@ -412,21 +407,21 @@ namespace TRABALHO_GRAFOS.Codigo
             if (!indexMatriz.ContainsKey(idVerticeOrigem))
                 throw new Exception("Vértice origem não encontrado.");
 
-
             int origemIndex = indexMatriz[idVerticeOrigem];
-            Console.WriteLine($"Menores distâncias a partir do vértice {idVerticeOrigem}:");
+            Console.WriteLine($"Menores distâncias a partir do vértice {idVerticeOrigem + 1}:");
             for (int j = 0; j < n; j++)
             {
                 int destinoId = vertices[j].id;
                 string resultado = dist[origemIndex, j] >= INF
                     ? "infinito"
                     : dist[origemIndex, j].ToString();
-                Console.WriteLine($"{idVerticeOrigem} --> {destinoId}: {resultado}");
+                Console.WriteLine($"{idVerticeOrigem + 1} --> {destinoId + 1}: {resultado}");
             }
         }
 
         public static void ImprimirAdjacentes(Vertice v1, Vertice v2, Grafo grafo)
         {
+
             Vertice? v = grafo.DicGrafo.Keys.FirstOrDefault(vertice => vertice.Equals(v1));
 
             if (v == null) { throw new Exception($"Vértice V1 ({v1.ToString()}) informado não faz parte do grafo.  "); }
@@ -434,7 +429,6 @@ namespace TRABALHO_GRAFOS.Codigo
             bool saoAdjacentes = grafo.SaoAdjacentes(v1, v2);
 
             Console.WriteLine(saoAdjacentes ? "SÃO adjacentes." : "NÃO são adjacentes.");
-
         }
 
         public static void ImprimirTrocaVertices(Grafo grafo, int id_Vertice1, int id_Vertice2)
@@ -443,10 +437,10 @@ namespace TRABALHO_GRAFOS.Codigo
             Vertice? v2 = grafo.DicGrafo.Keys.FirstOrDefault(vertice => vertice.id == id_Vertice2);
 
             if (v1 == null)
-                throw new Exception($"Vértice {v1.id} não encontrado para troca. ");
+                throw new Exception($"Vértice {id_Vertice1 + 1} não encontrado para troca. ");
 
             if (v2 == null)
-                throw new Exception($"Vértice {v2.id} não encontrado para troca. ");
+                throw new Exception($"Vértice {id_Vertice2 + 1} não encontrado para troca. ");
 
             grafo.TrocaDoisVertices(v1, v2);
 
