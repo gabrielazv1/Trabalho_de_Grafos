@@ -4,9 +4,9 @@ using TRABALHO_GRAFOS.Codigo.Interface;
 
 namespace TRABALHO_GRAFOS.Codigo
 {
-    internal class GrafoLista : Grafo
+    public class GrafoLista : Grafo
     {
-        private List<Aresta>[] listaGrafo;
+        public static List<Aresta>[] listaGrafo;
 
         public GrafoLista(int vertices)
         {
@@ -60,31 +60,6 @@ namespace TRABALHO_GRAFOS.Codigo
         public bool AdicionarVertice(Vertice v)
         {
             return base.AdicionarVertice(v);
-        }
-
-        public void CriarGrafoLista()
-        {
-
-        }
-
-        public void ImprimirListaAdjacencia()
-        {
-            for (int i = 0; i < listaGrafo.Length; i++)
-            {
-                Console.Write($"Vértice {i}: ");
-                if (listaGrafo[i].Count > 0)
-                {
-                    foreach (Aresta a in listaGrafo[i])
-                    {
-                        Console.Write($"-> {a.Destino.id} (peso {a.Peso}) ");
-                    }
-                }
-                else
-                {
-                    Console.Write("sem conexões");
-                }
-                Console.WriteLine();
-            }
         }
     }
 }

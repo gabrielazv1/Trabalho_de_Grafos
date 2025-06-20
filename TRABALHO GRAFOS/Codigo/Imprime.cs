@@ -9,14 +9,40 @@ namespace TRABALHO_GRAFOS.Codigo
 {
     public static class Imprime
     {
-
-        public static void ImprimirListaAdj(Grafo grafo)
+        public static void ImprimirListaAdj()
         {
-
+            for (int i = 0; i < GrafoLista.listaGrafo.Length; i++)
+            {
+                Console.Write($"Vértice {i + 1} ");
+                if (GrafoLista.listaGrafo[i].Count > 0)
+                {
+                    foreach (Aresta a in GrafoLista.listaGrafo[i])
+                    {
+                        Console.Write($"-> {a.Destino.id + 1} (peso {a.Peso}) ");
+                    }
+                }
+                else
+                {
+                    Console.Write("sem conexões");
+                }
+                Console.WriteLine();
+            }
         }
-        public static void ImprimirMatrizAdj(Grafo grafo)
+        public static void ImprimirMatrizAdj()
         {
-
+            Console.WriteLine("Matriz de Adjacência:");
+            for (int i = 0; i < GrafoMatriz.matrizGrafo.GetLength(0); i++)
+            {
+                Console.Write($"Vértice {i + 1} ");
+                for (int j = 0; j < GrafoMatriz.matrizGrafo.GetLength(1); j++)
+                {
+                    if (GrafoMatriz.matrizGrafo[i, j] != null)
+                        Console.Write($"[{GrafoMatriz.matrizGrafo[i, j].Peso}] ");
+                    else
+                        Console.Write("[0] ");
+                }
+                Console.WriteLine();
+            }
         }
 
         public static void ImprimirArestasAdj(int verticeOrigem, int verticeDestino, Grafo grafo)

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TRABALHO_GRAFOS.Codigo.Interface
 {
-    internal interface IGrafo
+    public interface IGrafo
     {
         void TrocaDoisVertices(Vertice v1, Vertice v2);
         bool AdicionarVertice(Vertice v);

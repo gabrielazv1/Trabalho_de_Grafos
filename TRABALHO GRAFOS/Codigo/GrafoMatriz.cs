@@ -9,9 +9,9 @@ using TRABALHO_GRAFOS.Codigo.Interface;
 
 namespace TRABALHO_GRAFOS.Codigo
 {
-    internal class GrafoMatriz : Grafo
+    public class GrafoMatriz : Grafo
     {
-        private Aresta[,] matrizGrafo;
+        public static Aresta[,] matrizGrafo;
         public GrafoMatriz(int vertices, List<List<int>> listaArestas)
         {
             matrizGrafo = new Aresta[vertices, vertices];
@@ -21,10 +21,10 @@ namespace TRABALHO_GRAFOS.Codigo
                 int destino = aresta[1];
                 int peso = aresta[2];
 
-                matrizGrafo[origem, destino] = new Aresta(new Vertice(origem), new Vertice(destino), peso);
+                AdicionarAresta(new Aresta(new Vertice(origem), new Vertice(destino), peso));
             }
 
-           DicGrafo = PopularDicionario();
+            DicGrafo = PopularDicionario();
         }
 
         private Dictionary<Vertice, List<Aresta>> PopularDicionario()
@@ -86,28 +86,5 @@ namespace TRABALHO_GRAFOS.Codigo
                 return false;
             }
         }
-
-        public void CriarGrafoMatriz()
-        {
-
-        }
-
-        public void ImprimirMatrizAdjacencia()
-        {
-            Console.WriteLine("Matriz de Adjacência:");
-            for (int i = 0; i < matrizGrafo.GetLength(0); i++)
-            {
-                Console.Write($"Vértice {i}: ");
-                for (int j = 0; j < matrizGrafo.GetLength(1); j++)
-                {
-                    if (matrizGrafo[i, j] != null)
-                        Console.Write($"[{matrizGrafo[i, j].Peso}] ");
-                    else
-                        Console.Write("[0] ");
-                }
-                Console.WriteLine();
-            }
-        }
-
     }
 }
