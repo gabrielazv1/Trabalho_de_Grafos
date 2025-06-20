@@ -16,8 +16,10 @@ namespace TRABALHO_GRAFOS.Codigo
         private int termino = 0;
         private bool visitado = false;
         private Vertice pai = null;
+        private int nivel = 0;
+        private int distancia = 0;
 
-        public Vertice Pai
+        public Vertice? Pai
         {
             get { return pai; }
             set { pai = value; }
@@ -46,6 +48,18 @@ namespace TRABALHO_GRAFOS.Codigo
         {
             get { return termino; }
             set { termino = value; }
+        }
+
+        public int Nivel
+        {
+            get { return nivel; }
+            set { nivel = value; }
+        }
+
+        public int Distancia
+        {
+            get { return distancia; }
+            set { distancia = value; }
         }
 
 

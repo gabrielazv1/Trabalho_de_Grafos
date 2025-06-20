@@ -246,7 +246,27 @@ namespace TRABALHO_GRAFOS.Codigo
 
                         break;
 
-                    case 5: ImprimirArestasIncidentes(grafo); break;
+                    case 5:
+                        try
+                        {
+                            Console.Clear();
+                            Separador();
+
+                            Console.Write("Informe o vértice: ");
+
+                            if (!int.TryParse(Console.ReadLine(), out int vertice))
+                            {
+                                throw new Exception("Entrada inválida, a entrada deve ser um número inteiro.");
+                            }
+
+                            Console.Clear();
+                            Separador();
+                            Imprime.ImprimirArestasInc(vertice, grafo);
+                            Separador();
+                        }
+                        catch (Exception ex) { Console.WriteLine(ex.Message + " Aperte ENTER para continuar"); }
+
+                        break;
 
                     case 6:
                         try
@@ -276,7 +296,27 @@ namespace TRABALHO_GRAFOS.Codigo
 
                         break;
 
-                    case 7: ImprimirGrauVertice(grafo); break;
+                    case 7:
+                        try
+                        {
+                            Console.Clear();
+                            Separador();
+
+                            Console.Write("Informe o vértice: ");
+
+                            if (!int.TryParse(Console.ReadLine(), out int vertice))
+                            {
+                                throw new Exception("Entrada inválida, a entrada deve ser um número inteiro.");
+                            }
+
+                            Console.Clear();
+                            Separador();
+                            Imprime.ImprimirGrau(vertice, grafo);
+                            Separador();
+                        }
+                        catch (Exception ex) { Console.WriteLine(ex.Message + " Aperte ENTER para continuar"); }
+
+                        break;
 
                     case 8:
                         try
@@ -308,7 +348,48 @@ namespace TRABALHO_GRAFOS.Codigo
 
                         break;
 
-                    case 9: SubstituirPesoAresta(grafo); break;
+                    case 9:
+                        try
+                        {
+                            Console.Clear();
+                            Separador();
+
+                            Console.Write("Informe o vertice de ORIGEM da aresta: ");
+
+                            if (!int.TryParse(Console.ReadLine(), out int verticeOrigem))
+                            {
+                                throw new Exception("Entrada inválida, a entrada ");
+                            }
+
+                            Separador();
+
+                            Console.Write("Informe o vertice de DESTINO da aresta: ");
+
+                            if (!int.TryParse(Console.ReadLine(), out int verticeDestino))
+                            {
+                                throw new Exception("Entrada inválida, a entrada deve ser inteira");
+                            }
+
+                            Separador();
+
+                            Console.Write($"Informe o novo peso da aresta ({verticeOrigem}, {verticeDestino}): ");
+
+                            if (!int.TryParse(Console.ReadLine(), out int peso))
+                            {
+                                throw new Exception("Entrada inválida, a entrada deve ser inteira");
+                            }
+
+                            Separador();
+                            Console.Clear();
+
+                            Separador();
+                            Imprime.TrocarPesoArestas(verticeOrigem, verticeDestino, peso, grafo);
+                            Separador();
+                        }
+                        catch (Exception ex) { Console.WriteLine(ex.Message + "Aperte ENTER para continuar..."); }
+
+                        break;
+
 
                     case 10:
                         try
@@ -341,7 +422,27 @@ namespace TRABALHO_GRAFOS.Codigo
 
                         break;
 
-                    case 11: ExecutarBfs(grafo); break;
+                    case 11:
+                        try
+                        {
+                            Console.Clear();
+                            Separador();
+
+                            Console.Write("Informe o vértice: ");
+
+                            if (!int.TryParse(Console.ReadLine(), out int vertice))
+                            {
+                                throw new Exception("Entrada inválida, a entrada deve ser um número inteiro.");
+                            }
+
+                            Console.Clear();
+                            Separador();
+                            Imprime.ImprimirBuscaLargura(grafo, vertice);
+                            Separador();
+                        }
+                        catch (Exception ex) { Console.WriteLine(ex.Message + " Aperte ENTER para continuar"); }
+
+                        break;
 
                     case 12:
                         try
@@ -363,7 +464,33 @@ namespace TRABALHO_GRAFOS.Codigo
 
                         break;
 
-                    case 13: ExecutarDijkstra(grafo); break;
+                    case 13:
+
+                        try
+                        {
+                            Console.Clear();
+                            Separador();
+                            Console.Write("Informe o vértice de ORIGEM: ");
+
+                            if (!int.TryParse(Console.ReadLine(), out int verticeOrigem))
+                            {
+                                throw new Exception("Entrada inválida, a entrada deve ser um número inteiro.");
+                            }
+
+                            Console.Write("Informe o vértice de DESTINO: ");
+
+                            if (!int.TryParse(Console.ReadLine(), out int verticeDestino))
+                            {
+                                throw new Exception("Entrada inválida, a entrada deve ser um número inteiro.");
+                            }
+                            Console.Clear();
+                            Separador();
+                            Imprime.ImprimirDijkstra(verticeOrigem, verticeDestino, grafo);
+                            Separador();
+                        }
+                        catch (Exception ex) { Console.WriteLine(ex.Message + " Aperte ENTER para continuar"); }
+
+                        break;
 
 
                     case 14:
