@@ -229,11 +229,11 @@ namespace TRABALHO_GRAFOS.Codigo
 
                 if (v.Pai != null)
                 {
-                    Console.Write($"{v.Pai.id}");
+                    Console.Write($"{v.Pai.id}\n");
                 }
                 else
                 {
-                    Console.Write("-");
+                    Console.Write("-\n");
                 }
             }
         }
@@ -261,11 +261,11 @@ namespace TRABALHO_GRAFOS.Codigo
                 Console.WriteLine($" Vértice {v.id} --> Tempo de Descoberta: {v.Descoberto} - Tempo de Término: {v.Termino} - Pai: ");
                 if (v.Pai != null)
                 {
-                    Console.WriteLine($"{v.Pai.id}");
+                    Console.Write($"{v.Pai.id}\n");
                 }
                 else
                 {
-                    Console.WriteLine("-");
+                    Console.Write("-\n");
                 }
             }
         }
