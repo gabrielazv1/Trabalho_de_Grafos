@@ -7,17 +7,18 @@ using TRABALHO_GRAFOS.Codigo.Interface;
 
 namespace TRABALHO_GRAFOS.Codigo
 {
-    internal class Grafo : IGrafo
+    public class Grafo : IGrafo
     {
-        internal Dictionary<Vertice, List<Aresta>> DicGrafo { get; private set; }
+        public Dictionary<Vertice, List<Aresta>> DicGrafo { get; set; }
         public int NumeroDeVertices { get; private set; }
+
         public Grafo()
         {
             DicGrafo = new Dictionary<Vertice, List<Aresta>>();
             NumeroDeVertices = 0;
         }
 
-        public bool AdicionarVertice(Vertice v)
+        public virtual bool AdicionarVertice(Vertice v)
         {
             if (!DicGrafo.ContainsKey(v))
             {
@@ -27,23 +28,73 @@ namespace TRABALHO_GRAFOS.Codigo
             return false;
         }
 
-        public bool AdicionarAresta(Aresta a)
+        public virtual bool AdicionarAresta(Aresta a)
         {
             if (!DicGrafo.ContainsKey(a.Origem) || !DicGrafo.ContainsKey(a.Destino))
                 return false;
 
+            AdicionarVertice(a.Origem);
+            AdicionarVertice(a.Destino);
             DicGrafo[a.Origem].Add(a);
             return true;
         }
 
-        public void TrocaDoisVertices(Vertice v1, Vertice v2)
+        public virtual void TrocaDoisVertices(Vertice v1, Vertice v2)
         {
-            if (!DicGrafo.ContainsKey(v1) || !DicGrafo.ContainsKey(v2))
-                return;
-
-            var temp = DicGrafo[v1];
+            List<Aresta>? temp = DicGrafo[v1];
             DicGrafo[v1] = DicGrafo[v2];
             DicGrafo[v2] = temp;
+
+            foreach (Aresta aresta in DicGrafo[v1])
+            {
+                if (aresta.Origem.Equals(v2))
+                    aresta.Origem = v1;
+            }
+
+            foreach (Aresta aresta in DicGrafo[v2])
+            {
+                if (aresta.Origem.Equals(v1))
+                    aresta.Origem = v2;
+            }
+
+            foreach (List<Aresta> lista in DicGrafo.Values)
+            {
+                foreach (Aresta aresta in lista)
+                {
+                    if (aresta.Destino.Equals(v1))
+                        aresta.Destino = v2;
+                    else if (aresta.Destino.Equals(v2))
+                        aresta.Destino = v1;
+                }
+            }
+
+        }
+
+        public virtual bool SaoAdjacentes(Vertice v1, Vertice v2)
+        {
+            DicGrafo.TryGetValue(v1, out List<Aresta>? arestas);
+
+            return arestas?.Any(aresta => aresta.Destino.Equals(v2)) ?? false;
+        }
+
+        public void Imprimir()
+        {
+            foreach (var par in DicGrafo)
+            {
+                Console.Write($"Vértice {par.Key.id}: ");
+                if (par.Value.Count > 0)
+                {
+                    foreach (var aresta in par.Value)
+                    {
+                        Console.Write($"-> {aresta.Destino.id} (peso {aresta.Peso}) ");
+                    }
+                }
+                else
+                {
+                    Console.Write("sem conexões");
+                }
+                Console.WriteLine();
+            }
         }
     }
 

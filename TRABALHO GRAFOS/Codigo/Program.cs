@@ -64,7 +64,7 @@ namespace TRABALHO_GRAFOS.Codigo
             menu.AppendLine("1 - Construir o Grafo a mão");
             menu.AppendLine("2 – Importar arquivo DIMACs");
             menu.AppendLine("0 – Sair");
-            
+
             Console.Write(menu.ToString());
             Separador();
             return LerInteiro("Escolha uma opção: ");
@@ -120,7 +120,7 @@ namespace TRABALHO_GRAFOS.Codigo
 
         #endregion
         #region Menu Operações
-        private static int MenuOperacoes(IGrafo grafo)
+        private static int MenuOperacoes(Grafo grafo)
         {
             Console.Clear();
             Cabecalho("Menu Principal");
@@ -141,14 +141,14 @@ namespace TRABALHO_GRAFOS.Codigo
             menu.AppendLine("13 – Caminho mínimo (Dijkstra)");
             menu.AppendLine("14 – Caminho mínimo (Floyd-Warshall)");
             menu.AppendLine("0  – Voltar");
-            
+
             Console.Write(menu.ToString());
             Separador();
 
             return LerInteiro("Escolha uma opção: ");
         }
 
-        private static void ControlarOperacoes(IGrafo grafo)
+        private static void ControlarOperacoes(Grafo grafo)
         {
             if (grafo == null)
             {
@@ -180,7 +180,7 @@ namespace TRABALHO_GRAFOS.Codigo
                             Console.WriteLine("Este grafo não usa lista de adjacência.");
                             Separador();
                         }
-                            
+
                         break;
                     case 2:
                         if (grafo is GrafoMatriz gmatriz)
@@ -198,20 +198,195 @@ namespace TRABALHO_GRAFOS.Codigo
                             Console.WriteLine("Este grafo não usa matriz de adjacência.");
                             Separador();
                         }
-                            
+
                         break;
-                    case 3: ImprimirArestasAdjacentes(grafo); break;
-                    case 4: ImprimirVerticesAdjacentes(grafo); break;
+                    case 3:
+                        try
+                        {
+                            Console.Clear();
+                            Separador();
+                            Console.Write("Informe o vértice de ORIGEM da aresta: ");
+
+                            if (!int.TryParse(Console.ReadLine(), out int verticeOrigem))
+                            {
+                                throw new Exception("Entrada inválida, a entrada deve ser um número inteiro.");
+                            }
+
+                            Console.Write("Informe o vértice de DESTINO da aresta: ");
+
+                            if (!int.TryParse(Console.ReadLine(), out int verticeDestino))
+                            {
+                                throw new Exception("Entrada inválida, a entrada deve ser um número inteiro.");
+                            }
+                            Separador();
+
+                            Imprime.ImprimirArestasAdj(verticeOrigem, verticeDestino, grafo);
+                            Separador();
+                        }
+                        catch (Exception ex) { Console.WriteLine(ex.Message + " Aperte ENTER para continuar"); }
+                        break;
+
+                    case 4:
+                        try
+                        {
+                            Console.Clear();
+                            Separador();
+                            Console.Write("Informe o vértice: ");
+
+                            if (!int.TryParse(Console.ReadLine(), out int id_verticeV))
+                            {
+                                throw new Exception("Entrada inválida, a entrada deve ser um número inteiro.");
+                            }
+
+                            Separador();
+
+                            Imprime.ImprimirVerticesAdj(grafo, id_verticeV);
+                        }
+                        catch (Exception ex) { Console.WriteLine(ex.Message + " Aperte ENTER para continuar"); }
+
+                        break;
+
                     case 5: ImprimirArestasIncidentes(grafo); break;
-                    case 6: ImprimirVerticesIncidentesaAresta(grafo); break;
+
+                    case 6:
+                        try
+                        {
+                            Console.Clear();
+                            Separador();
+
+                            Console.Write("Informe o vértice de ORIGEM da aresta: ");
+
+                            if (!int.TryParse(Console.ReadLine(), out int id_verticeOrigem))
+                            {
+                                throw new Exception("Entrada inválida, a entrada deve ser um número inteiro.");
+                            }
+
+                            Console.Write("Informe o vértice de DESTINO da aresta: ");
+
+                            if (!int.TryParse(Console.ReadLine(), out int id_verticeDestino))
+                            {
+                                throw new Exception("Entrada inválida, a entrada deve ser um número inteiro.");
+                            }
+                            Separador();
+
+                            Imprime.ImprimirVerticeInc(grafo, id_verticeOrigem, id_verticeDestino);
+                        }
+                        catch (Exception ex) { Console.WriteLine(ex.Message + " Aperte ENTER para continuar"); }
+
+
+                        break;
+
                     case 7: ImprimirGrauVertice(grafo); break;
-                    case 8: VerificarAdjacenciaVertices(grafo); break;
+
+                    case 8:
+                        try
+                        {
+                            Console.Clear();
+                            Separador();
+
+                            Console.Write("Informe o vértice V1: ");
+
+                            if (!int.TryParse(Console.ReadLine(), out int id_v1))
+                            {
+                                throw new Exception("Entrada inválida, a entrada deve ser um número inteiro.");
+                            }
+
+                            Console.Write("Informe o vértice V2: ");
+
+                            if (!int.TryParse(Console.ReadLine(), out int id_v2))
+                            {
+                                throw new Exception("Entrada inválida, a entrada deve ser um número inteiro.");
+                            }
+                            Separador();
+
+                            Vertice v1 = new Vertice(id_v1);
+                            Vertice v2 = new Vertice(id_v2);
+
+                            Imprime.ImprimirAdjacentes(v1, v2, grafo);
+                        }
+                        catch (Exception ex) { Console.WriteLine(ex.Message + " Aperte ENTER para continuar"); }
+
+                        break;
+
                     case 9: SubstituirPesoAresta(grafo); break;
-                    case 10: TrocarVertices(grafo); break;
+
+                    case 10:
+                        try
+                        {
+                            Console.Clear();
+                            Separador();
+
+                            Console.WriteLine("Informe quais vértices gostaria de trocar...");
+                            Console.Write("Primeiro vértice: ");
+
+                            if (!int.TryParse(Console.ReadLine(), out int id_v1))
+                            {
+                                throw new Exception("Entrada inválida, a entrada deve ser um número inteiro.");
+                            }
+
+                            Console.Write("Segundo vértice: ");
+
+                            if (!int.TryParse(Console.ReadLine(), out int id_v2))
+                            {
+                                throw new Exception("Entrada inválida, a entrada deve ser um número inteiro.");
+                            }
+                            Separador();
+
+                            Vertice v1 = new Vertice(id_v1);
+                            Vertice v2 = new Vertice(id_v2);
+
+                            Imprime.ImprimirTrocaVertices(grafo, id_v1, id_v2);
+                        }
+                        catch (Exception ex) { Console.WriteLine(ex.Message + " Aperte ENTER para continuar"); }
+
+                        break;
+
                     case 11: ExecutarBfs(grafo); break;
-                    case 12: ExecutarDfs(grafo); break;
+
+                    case 12:
+                        try
+                        {
+                            Console.Clear();
+                            Separador();
+
+                            Console.Write("Informe qual será o vértice raiz: ");
+
+                            if (!int.TryParse(Console.ReadLine(), out int idVraiz))
+                            {
+                                throw new Exception("Entrada inválida, a entrada deve ser um número inteiro.");
+                            }
+                            Separador();
+
+                            Imprime.ImprimirBuscaProfundidade(grafo, idVraiz);
+                        }
+                        catch (Exception ex) { Console.WriteLine(ex.Message + " Aperte ENTER para continuar"); }
+
+                        break;
+
                     case 13: ExecutarDijkstra(grafo); break;
-                    case 14: ExecutarFloydWarshall(grafo); break;
+
+
+                    case 14:
+                        try
+                        {
+                            Console.Clear();
+                            Separador();
+
+                            Console.Write("Informe qual será o vértice de origem: ");
+
+                            if (!int.TryParse(Console.ReadLine(), out int id_vertOrigem))
+                            {
+                                throw new Exception("Entrada inválida, a entrada deve ser um número inteiro.");
+                            }
+                            Separador();
+
+                            Imprime.ImprimirFloydWarshal(grafo, id_vertOrigem);
+                        }
+                        catch (Exception ex) { Console.WriteLine(ex.Message + " Aperte ENTER para continuar"); }
+
+                        break;
+
+
                     case 0:
                         Console.Clear();
                         break;
@@ -226,7 +401,7 @@ namespace TRABALHO_GRAFOS.Codigo
         #region Métodos de Criação do Grafo
         private static void SelecionaDadosDoGrafo()
         {
-            
+
             try
             {
                 Console.Clear();
@@ -248,7 +423,7 @@ namespace TRABALHO_GRAFOS.Codigo
                 Console.Clear();
                 List<List<int>> arestasLidas = ConstruirGrafo(numVertices, numArestas);
 
-                IGrafo grafo;
+                Grafo grafo;
                 Separador();
                 if (CalculaDensidade(numVertices, numArestas) >= 0.5)
                 {
@@ -265,7 +440,7 @@ namespace TRABALHO_GRAFOS.Codigo
                     grafo = new GrafoLista(numVertices, arestasLidas);
                     Console.Clear();
                     Separador();
-                    Console.WriteLine("Criando grafo em formato de LISTA\n" 
+                    Console.WriteLine("Criando grafo em formato de LISTA\n"
                                     + "de acordo com o cálculo da densidade...");
                     Separador();
                     Pausa();
@@ -289,7 +464,7 @@ namespace TRABALHO_GRAFOS.Codigo
         {
             List<List<int>> dimac = new List<List<int>>();
 
-            
+
             for (int i = 1; i <= numArestas; i++)
             {
                 try
@@ -319,7 +494,7 @@ namespace TRABALHO_GRAFOS.Codigo
                         continue;
                     }
                     Console.WriteLine();
-                    dimac.Add(new List<int> { verticeOrigem, verticeDestino, peso});
+                    dimac.Add(new List<int> { verticeOrigem, verticeDestino, peso });
                 }
                 catch (Exception ex)
                 {
@@ -409,7 +584,7 @@ namespace TRABALHO_GRAFOS.Codigo
                     dimacs.Add(new List<int> { verticeOrigem, verticeDestino, peso });
                 }
 
-                IGrafo grafo;
+                Grafo grafo;
                 if (CalculaDensidade(numVertices, numArestas) >= 0.5)
                 {
                     grafo = new GrafoMatriz(numVertices, dimacs);
@@ -540,13 +715,13 @@ namespace TRABALHO_GRAFOS.Codigo
 
         private static void TrocarVertices(IGrafo grafo)
         {
-        //    Console.WriteLine("Vértice v1:");
-        //    Vertice v1 = ObterVerticePorId(grafo);
-        //    Console.WriteLine("Vértice v2:");
-        //    Vertice v2 = ObterVerticePorId(grafo);
-        //    grafo.TrocaDoisVertices(v1, v2);
-        //    Console.WriteLine("Vértices trocados!");
-        //    Pausa();
+            //    Console.WriteLine("Vértice v1:");
+            //    Vertice v1 = ObterVerticePorId(grafo);
+            //    Console.WriteLine("Vértice v2:");
+            //    Vertice v2 = ObterVerticePorId(grafo);
+            //    grafo.TrocaDoisVertices(v1, v2);
+            //    Console.WriteLine("Vértices trocados!");
+            //    Pausa();
         }
 
 

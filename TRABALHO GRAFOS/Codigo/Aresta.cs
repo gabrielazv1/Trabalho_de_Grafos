@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TRABALHO_GRAFOS.Codigo
 {
-    internal class Aresta
+    public class Aresta
     {
         private Vertice origem;
         private Vertice destino;
@@ -36,6 +36,13 @@ namespace TRABALHO_GRAFOS.Codigo
             this.origem = origem;
             this.destino = destino;
             this.peso = peso;
+        }
+
+        public Aresta(Vertice origem, Vertice destino)
+        {
+            this.origem = origem;
+            this.destino = destino;
+            this.peso = 0;
         }
 
         public void SubstituiPeso(int peso)

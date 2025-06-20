@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace TRABALHO_GRAFOS.Codigo
 {
-    internal class Vertice
+    public class Vertice
     {
         public int id;
-        public List<Aresta> arestas = new List<Aresta>();
-        public List<Vertice> verticesAdjacentes = new List<Vertice>();
+        private List<Aresta> arestas = new List<Aresta>();
+        private List<Vertice> verticesAdjacentes = new List<Vertice>();
 
         private int descoberto = 0;
         private int termino = 0;
@@ -21,6 +21,13 @@ namespace TRABALHO_GRAFOS.Codigo
         {
             get { return pai; }
             set { pai = value; }
+        }
+
+
+        public List<Vertice> VerticesAdjacentes
+        {
+            get { return verticesAdjacentes; }
+            private set { verticesAdjacentes = value; }
         }
 
         public bool Visitado
@@ -57,11 +64,6 @@ namespace TRABALHO_GRAFOS.Codigo
         {
         }
 
-        public static bool SaoAdjacentes(Vertice v1, Vertice v2)
-        {
-            return v1.verticesAdjacentes.Contains(v2);
-        }
-
         public override bool Equals(object obj)
         {
             return obj is Vertice v && id == v.id;
@@ -70,6 +72,16 @@ namespace TRABALHO_GRAFOS.Codigo
         public override int GetHashCode()
         {
             return id.GetHashCode();
+        }
+
+        public void AdicionarAresta(Aresta a)
+        {
+            arestas.Add(a);
+        }
+
+        public override string ToString()
+        {
+            return $"ID Vértice: {id}";
         }
     }
 }

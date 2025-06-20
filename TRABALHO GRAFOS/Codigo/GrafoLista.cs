@@ -14,6 +14,7 @@ namespace TRABALHO_GRAFOS.Codigo
             for (int i = 0; i < vertices; i++)
             {
                 listaGrafo[i] = new List<Aresta>();
+                AdicionarVertice(new Vertice(i));
             }
         }
 
@@ -23,21 +24,34 @@ namespace TRABALHO_GRAFOS.Codigo
             {
                 if (linha.Count == 3)
                 {
-                    Vertice origem = new Vertice(linha[0]);
-                    Vertice destino = new Vertice(linha[1]);
+                    int origemId = linha[0];
+                    int destinoId = linha[1];
                     int peso = linha[2];
+
+                    Vertice origem = new Vertice(origemId);
+                    Vertice destino = new Vertice(destinoId);
                     Aresta ar = new Aresta(origem, destino, peso);
-                    AdicionarAresta(ar);
+
+                    AdicionarAresta(ar);          
                 }
             }
         }
 
-        public bool AdicionarAresta(Aresta a)
+        public override bool AdicionarAresta(Aresta a)
         {
             if (a.Origem.id >= 0 && a.Origem.id < listaGrafo.Length &&
                 a.Destino.id >= 0 && a.Destino.id < listaGrafo.Length)
             {
                 listaGrafo[a.Origem.id].Add(a);
+
+                if (!DicGrafo.ContainsKey(a.Origem))
+                    AdicionarVertice(a.Origem);
+
+                if (!DicGrafo.ContainsKey(a.Destino))
+                    AdicionarVertice(a.Destino);
+
+                DicGrafo[a.Origem].Add(a);
+
                 return true;
             }
             return false;
@@ -45,7 +59,7 @@ namespace TRABALHO_GRAFOS.Codigo
 
         public bool AdicionarVertice(Vertice v)
         {
-            return false;
+            return base.AdicionarVertice(v);
         }
 
         public void CriarGrafoLista()

@@ -1,13 +1,15 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 using TRABALHO_GRAFOS.Codigo.Interface;
 
 namespace TRABALHO_GRAFOS.Codigo
 {
-    internal class GrafoMatriz : IGrafo
+    internal class GrafoMatriz : Grafo
     {
         private Aresta[,] matrizGrafo;
         public GrafoMatriz(int vertices, List<List<int>> listaArestas)
@@ -21,7 +23,35 @@ namespace TRABALHO_GRAFOS.Codigo
 
                 matrizGrafo[origem, destino] = new Aresta(new Vertice(origem), new Vertice(destino), peso);
             }
+
+           DicGrafo = PopularDicionario();
         }
+
+        private Dictionary<Vertice, List<Aresta>> PopularDicionario()
+        {
+            Dictionary<Vertice, List<Aresta>> grafo = new Dictionary<Vertice, List<Aresta>>();
+
+            for (int i = 0; i < matrizGrafo.GetLength(0); i++)
+            {
+                grafo[new Vertice(i)] = new List<Aresta>();
+            }
+
+            for (int i = 0; i < matrizGrafo.GetLength(0); i++)
+            {
+                for (int j = 0; j < matrizGrafo.GetLength(1); j++)
+                {
+                    Aresta aresta = matrizGrafo[i, j];
+
+                    if (aresta != null)
+                    {
+                        grafo[new Vertice(i)].Add(new Aresta(new Vertice(i), new Vertice(j), aresta.Peso));
+                    }
+                }
+            }
+
+            return grafo;
+        }
+
         public void TrocaDoisVertices(Vertice v1, Vertice v2)
         {
 
