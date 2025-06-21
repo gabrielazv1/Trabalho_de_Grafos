@@ -17,7 +17,6 @@ namespace TRABALHO_GRAFOS.Codigo
         {
             Console.Clear();
             Iniciar();
-
         }
         #endregion
         #region Menu Inicial
@@ -38,6 +37,10 @@ namespace TRABALHO_GRAFOS.Codigo
                         case 2:
                             Console.Clear();
                             ImportarGrafoDimacs();
+                            break;
+                        case 3:
+                            Console.Clear();
+                            ImportarBeeCrowd();
                             break;
                         case 0:
                             return;
@@ -63,6 +66,7 @@ namespace TRABALHO_GRAFOS.Codigo
             Cabecalho("Bem-Vindo ao Trabalho de Grafos!");
             menu.AppendLine("1 - Construir o Grafo a mão");
             menu.AppendLine("2 – Importar arquivo DIMACs");
+            menu.AppendLine("3 – Importar arquivo BeeCrowd");
             menu.AppendLine("0 – Sair");
 
             Console.Write(menu.ToString());
@@ -244,7 +248,6 @@ namespace TRABALHO_GRAFOS.Codigo
                         catch (Exception ex) { Console.WriteLine(ex.Message + "\nPressione ENTER para continuar..."); }
 
                         break;
-
                     case 5:
                         try
                         {
@@ -266,7 +269,6 @@ namespace TRABALHO_GRAFOS.Codigo
                         catch (Exception ex) { Console.WriteLine(ex.Message + " Aperte ENTER para continuar"); }
 
                         break;
-
                     case 6:
                         try
                         {
@@ -294,7 +296,6 @@ namespace TRABALHO_GRAFOS.Codigo
 
 
                         break;
-
                     case 7:
                         try
                         {
@@ -316,7 +317,6 @@ namespace TRABALHO_GRAFOS.Codigo
                         catch (Exception ex) { Console.WriteLine(ex.Message + " Aperte ENTER para continuar"); }
 
                         break;
-
                     case 8:
                         try
                         {
@@ -346,7 +346,6 @@ namespace TRABALHO_GRAFOS.Codigo
                         catch (Exception ex) { Console.WriteLine(ex.Message + "\nPressione ENTER para continuar..."); }
 
                         break;
-
                     case 9:
                         try
                         {
@@ -388,8 +387,6 @@ namespace TRABALHO_GRAFOS.Codigo
                         catch (Exception ex) { Console.WriteLine(ex.Message + "Aperte ENTER para continuar..."); }
 
                         break;
-
-
                     case 10:
                         try
                         {
@@ -420,7 +417,6 @@ namespace TRABALHO_GRAFOS.Codigo
                         catch (Exception ex) { Console.WriteLine(ex.Message + "\nPressione ENTER para continuar..."); }
 
                         break;
-
                     case 11:
                         try
                         {
@@ -442,7 +438,6 @@ namespace TRABALHO_GRAFOS.Codigo
                         catch (Exception ex) { Console.WriteLine(ex.Message + " Aperte ENTER para continuar"); }
 
                         break;
-
                     case 12:
                         try
                         {
@@ -462,7 +457,6 @@ namespace TRABALHO_GRAFOS.Codigo
                         catch (Exception ex) { Console.WriteLine(ex.Message + "\nPressione ENTER para continuar..."); }
 
                         break;
-
                     case 13:
 
                         try
@@ -492,8 +486,6 @@ namespace TRABALHO_GRAFOS.Codigo
                         catch (Exception ex) { Console.WriteLine(ex.Message + " Aperte ENTER para continuar"); }
 
                         break;
-
-
                     case 14:
                         try
                         {
@@ -642,9 +634,9 @@ namespace TRABALHO_GRAFOS.Codigo
             try
             {
                 Separador();
-                Console.Write("Caminho do arquivo DIMACs: ");
+                Console.WriteLine("Caminho do arquivo DIMACs (ex: C:\\pasta\\arquivo.txt):");
                 string caminhoArquivo = Console.ReadLine();
-
+                Separador();
                 if (string.IsNullOrWhiteSpace(caminhoArquivo))
                 {
                     Console.WriteLine("\nO caminho informado está vazio ou inválido.\n");
@@ -756,6 +748,205 @@ namespace TRABALHO_GRAFOS.Codigo
             if (numVertices <= 1) return 0;
             double densidade = (double)numArestas / (numVertices * (numVertices - 1));
             return densidade;
+        }
+        #endregion
+
+        #region Método BeeCrowd
+
+        static List<(int destino, int peso)>[] grafo;
+        static bool[] visitado;
+        static List<(int u, int v, int peso)> caminhoAtual;
+
+        public static void ImportarBeeCrowd()
+        {
+            try
+            {
+                Separador();
+                Console.WriteLine("Caminho do arquivo BeeCrowd (ex: C:\\pasta\\arquivo.txt):");
+                string caminhoArquivo = Console.ReadLine();
+                Separador();
+
+                if (string.IsNullOrWhiteSpace(caminhoArquivo))
+                {
+                    Console.WriteLine("\nO caminho informado está vazio ou inválido.\n");
+                    Pausa();
+                    return;
+                }
+
+                if (!File.Exists(caminhoArquivo))
+                {
+                    Console.WriteLine("\nArquivo não encontrado. Verifique se o caminho está correto.\n");
+                    Pausa();
+                    return;
+                }
+
+                string[] linhas = File.ReadAllLines(caminhoArquivo)
+                                      .Where(l => !string.IsNullOrWhiteSpace(l))
+                                      .ToArray();
+
+                if (linhas.Length < 2)
+                {
+                    Console.WriteLine("\nArquivo BeeCrowd inválido: poucas linhas.\n");
+                    Pausa();
+                    return;
+                }
+
+                string[] primeiraLinha = linhas[0].Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                if (primeiraLinha.Length != 2 ||
+                    !int.TryParse(primeiraLinha[0], out int N) ||
+                    !int.TryParse(primeiraLinha[1], out int K))
+                {
+                    Console.WriteLine($"\nFormato inválido na primeira linha: {linhas[0]}\n");
+                    Pausa();
+                    return;
+                }
+
+                var arestas = new List<(int, int, int)>();
+                for (int i = 1; i <= N - 1; i++)
+                {
+                    if (i >= linhas.Length)
+                    {
+                        Console.WriteLine($"\nFaltam arestas no arquivo.\n");
+                        Pausa();
+                        return;
+                    }
+
+                    string[] partes = linhas[i].Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+                    if (partes.Length != 3 ||
+                        !int.TryParse(partes[0], out int u) ||
+                        !int.TryParse(partes[1], out int v) ||
+                        !int.TryParse(partes[2], out int peso))
+                    {
+                        Console.WriteLine($"Erro na linha {i + 1}: '{linhas[i]}'");
+                        Pausa();
+                        return;
+                    }
+
+                    arestas.Add((u, v, peso));
+                }
+
+                if (N >= linhas.Length)
+                {
+                    Console.WriteLine("\nArquivo incompleto: faltam rotas.\n");
+                    Pausa();
+                    return;
+                }
+
+                if (!int.TryParse(linhas[N], out int Q))
+                {
+                    Console.WriteLine($"\nValor inválido para número de rotas: {linhas[N]}\n");
+                    Pausa();
+                    return;
+                }
+
+                var rotas = new List<(int, int)>();
+                for (int i = N + 1; i < linhas.Length; i++)
+                {
+                    string[] partes = linhas[i].Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+                    if (partes.Length != 2 ||
+                        !int.TryParse(partes[0], out int origem) ||
+                        !int.TryParse(partes[1], out int destino))
+                    {
+                        Console.WriteLine($"Erro na linha {i + 1}: '{linhas[i]}'");
+                        Pausa();
+                        return;
+                    }
+
+                    rotas.Add((origem, destino));
+                }
+
+                Console.Clear();
+                Separador();
+                Console.WriteLine("Arquivo BeeCrowd lido com sucesso!");
+                Separador();
+
+                int resultado = ResolverGeraldinho(N, K, arestas, rotas);
+
+                Console.WriteLine($"Maior força possível: {resultado}");
+                Separador();
+                Pausa();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro ao importar arquivo BeeCrowd: {ex.Message}");
+                Pausa();
+            }
+        }
+        static bool BuscaProfundidade(int atual, int destino)
+        {
+            if (atual == destino)
+                return true;
+
+            visitado[atual] = true;
+
+            foreach (var (vizinho, peso) in grafo[atual])
+            {
+                if (!visitado[vizinho])
+                {
+                    caminhoAtual.Add((atual, vizinho, peso));
+                    if (BuscaProfundidade(vizinho, destino))
+                        return true;
+                    caminhoAtual.RemoveAt(caminhoAtual.Count - 1);
+                }
+            }
+
+            return false;
+        }
+
+        static int ResolverGeraldinho(int N, int K, List<(int, int, int)> arestas, List<(int, int)> rotas)
+        {
+            grafo = new List<(int destino, int peso)>[N + 1];
+            for (int i = 0; i <= N; i++)
+                grafo[i] = new List<(int, int)>();
+
+            foreach (var (u, v, w) in arestas)
+            {
+                grafo[u].Add((v, w));
+                grafo[v].Add((u, w));
+            }
+
+            List<(int custo, int valor)> itens = new List<(int, int)>();
+
+            foreach (var (origem, destino) in rotas)
+            {
+                visitado = new bool[N + 1];
+                caminhoAtual = new List<(int, int, int)>();
+
+                BuscaProfundidade(origem, destino);
+
+                HashSet<int> verticesVisitados = new HashSet<int>();
+                int maiorForca = 0;
+
+                foreach (var (u, v, peso) in caminhoAtual)
+                {
+                    verticesVisitados.Add(u);
+                    verticesVisitados.Add(v);
+                    if (peso > maiorForca)
+                        maiorForca = peso;
+                }
+
+                int custo = verticesVisitados.Count;
+                if (custo <= K)
+                    itens.Add((custo, maiorForca));
+            }
+
+            int[] dp = new int[K + 1];
+            foreach (var (custo, valor) in itens)
+            {
+                for (int j = K; j >= custo; j--)
+                {
+                    dp[j] = Math.Max(dp[j], dp[j - custo] + valor);
+                }
+            }
+
+            int max = 0;
+            foreach (int valor in dp)
+                if (valor > max)
+                    max = valor;
+
+            return max == 0 ? -1 : max;
         }
         #endregion
     }
