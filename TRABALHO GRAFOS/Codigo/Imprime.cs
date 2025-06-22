@@ -7,8 +7,15 @@ using TRABALHO_GRAFOS.Codigo.Interface;
 
 namespace TRABALHO_GRAFOS.Codigo
 {
+    /// <summary>
+    /// Classe responsável por imprimir informações relacionadas ao grafo,
+    /// como listas e matrizes de adjacência, vértices, arestas e resultados de algoritmos.
+    /// </summary>
     public static class Imprime
     {
+        /// <summary>
+        /// Imprime a lista de adjacência do grafo usando a estrutura GrafoLista.
+        /// </summary>
         public static void ImprimirListaAdj()
         {
             for (int i = 0; i < GrafoLista.listaGrafo.Length; i++)
@@ -29,6 +36,10 @@ namespace TRABALHO_GRAFOS.Codigo
             }
         }
 
+        /// <summary>
+        /// Imprime a matriz de adjacência do grafo usando a estrutura GrafoMatriz.
+        /// </summary>
+
         public static void ImprimirMatrizAdj()
         {
             Console.WriteLine("Matriz de Adjacência:");
@@ -46,6 +57,12 @@ namespace TRABALHO_GRAFOS.Codigo
             }
         }
 
+        /// <summary>
+        /// Imprime as arestas adjacentes de dois vértices específicos.
+        /// </summary>
+        /// <param name="verticeOrigem">ID do vértice de origem.</param>
+        /// <param name="verticeDestino">ID do vértice de destino.</param>
+        /// <param name="grafo">Grafo contendo os dados.</param>
         public static void ImprimirArestasAdj(int verticeOrigem, int verticeDestino, Grafo grafo)
         {
             Vertice? vOrigem = grafo.DicGrafo.Keys.FirstOrDefault(v => v.id == verticeOrigem);
@@ -68,6 +85,11 @@ namespace TRABALHO_GRAFOS.Codigo
             }
         }
 
+        /// <summary>
+        /// Imprime os vértices adjacentes a um vértice informado.
+        /// </summary>
+        /// <param name="grafo">Grafo a ser consultado.</param>
+        /// <param name="idVertice">ID do vértice.</param>
         public static void ImprimirVerticesAdj(Grafo grafo, int idVertice)
         {
             Vertice? v = grafo.DicGrafo.Keys.FirstOrDefault(vertice => vertice.id == idVertice);
@@ -86,6 +108,11 @@ namespace TRABALHO_GRAFOS.Codigo
             }
         }
 
+        /// <summary>
+        /// Imprime todas as arestas que incidem sobre o vértice informado.
+        /// </summary>
+        /// <param name="idVertice">ID do vértice de destino.</param>
+        /// <param name="grafo">Grafo que contém os dados.</param>
         public static void ImprimirArestasInc(int idVertice, Grafo grafo)
         {
             try
@@ -114,6 +141,12 @@ namespace TRABALHO_GRAFOS.Codigo
             catch (Exception ex) { Console.WriteLine(ex.Message + "Aperte ENTER para continuar"); }
         }
 
+        /// <summary>
+        /// Imprime os vértices origem e destino de uma aresta específica.
+        /// </summary>
+        /// <param name="grafo">Grafo a ser consultado.</param>
+        /// <param name="idVertOrigem">ID do vértice de origem.</param>
+        /// <param name="idVertDestino">ID do vértice de destino.</param>
         public static void ImprimirVerticeInc(Grafo grafo, int idVertOrigem, int idVertDestino)
         {
             Aresta? a = grafo.DicGrafo.Values
@@ -128,6 +161,11 @@ namespace TRABALHO_GRAFOS.Codigo
             Console.WriteLine($" Origem: {a.Origem.id + 1} - Destino: {a.Destino.id + 1}");
         }
 
+        /// <summary>
+        /// Imprime o grau do vértice informado (quantidade de arestas conectadas).
+        /// </summary>
+        /// <param name="idVertice">ID do vértice.</param>
+        /// <param name="grafo">Grafo onde o vértice está localizado.</param>
         public static void ImprimirGrau(int idVertice, Grafo grafo)
         {
             try
@@ -147,6 +185,13 @@ namespace TRABALHO_GRAFOS.Codigo
             catch (Exception ex) { Console.WriteLine(ex.Message + "Aperte ENTER para continuar"); }
         }
 
+        /// <summary>
+        /// Altera o peso de uma aresta entre dois vértices.
+        /// </summary>
+        /// <param name="verticeOrigem">ID do vértice de origem.</param>
+        /// <param name="verticeDestino">ID do vértice de destino.</param>
+        /// <param name="peso">Novo peso a ser definido.</param>
+        /// <param name="grafo">Grafo que contém a aresta.</param>
         public static void TrocarPesoArestas(int verticeOrigem, int verticeDestino, int peso, Grafo grafo)
         {
             Vertice? vOrigem = grafo.DicGrafo.Keys.FirstOrDefault(vertice => vertice.id == verticeOrigem);
@@ -161,6 +206,11 @@ namespace TRABALHO_GRAFOS.Codigo
             }
         }
 
+        /// <summary>
+        /// Executa e imprime o resultado da busca em largura (BFS) a partir de um vértice inicial.
+        /// </summary>
+        /// <param name="grafo">Grafo onde será feita a busca.</param>
+        /// <param name="idVerticeInicial">ID do vértice inicial.</param>
         public static void ImprimirBuscaLargura(Grafo grafo, int idVerticeInicial)
         {
             Vertice? vInicial = grafo.DicGrafo.Keys.FirstOrDefault(v => v.id == idVerticeInicial);
@@ -234,6 +284,11 @@ namespace TRABALHO_GRAFOS.Codigo
             }
         }
 
+        /// <summary>
+        /// Executa e imprime a busca em profundidade (DFS) a partir do vértice raiz.
+        /// </summary>
+        /// <param name="grafo">Grafo onde será feita a busca.</param>
+        /// <param name="idVerticeRaiz">ID do vértice raiz da busca.</param>
         public static void ImprimirBuscaProfundidade(Grafo grafo, int idVerticeRaiz)
         {
             Vertice? verticeRaiz = grafo.DicGrafo.Keys.FirstOrDefault(vertice => vertice.id == idVerticeRaiz);
@@ -266,6 +321,12 @@ namespace TRABALHO_GRAFOS.Codigo
             }
         }
 
+        /// <summary>
+        /// Método auxiliar para realizar a visita de um vértice durante a DFS, atualizando tempos.
+        /// </summary>
+        /// <param name="grafo">Grafo a ser percorrido.</param>
+        /// <param name="v">Vértice atual.</param>
+        /// <param name="tempo">Tempo de descoberta e término sendo atualizado.</param>
         private static void VisitaVerticeBuscaProfundidade(Grafo grafo, Vertice v, ref int tempo)
         {
             tempo++;
@@ -289,6 +350,12 @@ namespace TRABALHO_GRAFOS.Codigo
             v.Termino = tempo;
         }
 
+        /// <summary>
+        /// Executa o algoritmo de Dijkstra e imprime o menor caminho entre dois vértices.
+        /// </summary>
+        /// <param name="idOrigem">ID do vértice de origem.</param>
+        /// <param name="idDestino">ID do vértice de destino.</param>
+        /// <param name="grafo">Grafo a ser analisado.</param>
         public static void ImprimirDijkstra(int idOrigem, int idDestino, Grafo grafo)
         {
             Vertice? origem = grafo.DicGrafo.Keys.FirstOrDefault(v => v.id == idOrigem);
@@ -373,6 +440,11 @@ namespace TRABALHO_GRAFOS.Codigo
             Console.WriteLine($"Custo do menor caminho: {pesoTotal}");
         }
 
+        /// <summary>
+        /// Executa o algoritmo de Floyd-Warshall e imprime as menores distâncias a partir de um vértice.
+        /// </summary>
+        /// <param name="grafo">Grafo onde será executado o algoritmo.</param>
+        /// <param name="idVerticeOrigem">ID do vértice de origem.</param>
         public static void ImprimirFloydWarshal(Grafo grafo, int idVerticeOrigem)
         {
             List<Vertice>? vertices = grafo.DicGrafo.Keys.OrderBy(v => v.id).ToList();
@@ -419,6 +491,12 @@ namespace TRABALHO_GRAFOS.Codigo
             }
         }
 
+        /// <summary>
+        /// Verifica e imprime se dois vértices são adjacentes no grafo.
+        /// </summary>
+        /// <param name="v1">Primeiro vértice.</param>
+        /// <param name="v2">Segundo vértice.</param>
+        /// <param name="grafo">Grafo a ser consultado.</param>
         public static void ImprimirAdjacentes(Vertice v1, Vertice v2, Grafo grafo)
         {
 
@@ -431,6 +509,12 @@ namespace TRABALHO_GRAFOS.Codigo
             Console.WriteLine(saoAdjacentes ? "SÃO adjacentes." : "NÃO são adjacentes.");
         }
 
+        /// <summary>
+        /// Troca dois vértices no grafo e imprime o estado do grafo após a troca.
+        /// </summary>
+        /// <param name="grafo">Grafo onde a troca será realizada.</param>
+        /// <param name="id_Vertice1">ID do primeiro vértice.</param>
+        /// <param name="id_Vertice2">ID do segundo vértice.</param>
         public static void ImprimirTrocaVertices(Grafo grafo, int id_Vertice1, int id_Vertice2)
         {
             Vertice? v1 = grafo.DicGrafo.Keys.FirstOrDefault(vertice => vertice.id == id_Vertice1);

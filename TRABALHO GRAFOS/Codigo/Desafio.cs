@@ -3,6 +3,10 @@ using System.Collections.Generic;
 
 namespace TRABALHO_GRAFOS.Codigo
 {
+    /// <summary>
+    /// Classe que implementa a solução para o desafio Pokémon do BeeCrowd,
+    /// utilizando técnicas de Lowest Common Ancestor (LCA) e programação dinâmica.
+    /// </summary>
     public class Desafio
     {
         private int nVertices;
@@ -14,6 +18,14 @@ namespace TRABALHO_GRAFOS.Codigo
         private int[][] pai;
         private int[][] pesoMaximo;
 
+        /// <summary>
+        /// Resolve o desafio Pokémon, encontrando a maior força possível dentro do limite K.
+        /// </summary>
+        /// <param name="nVertices">Número total de vértices no grafo.</param>
+        /// <param name="limiteK">Número máximo de vértices que podem ser visitados.</param>
+        /// <param name="arestas">Lista de arestas do grafo no formato (u, v, peso).</param>
+        /// <param name="rotas">Lista de rotas que precisam ser verificadas no formato (origem, destino).</param>
+        /// <returns>Maior força possível ou -1 se nenhuma rota válida for encontrada.</returns>
         public int DesafioPokemon(int nVertices, int limiteK, List<(int u, int v, int peso)> arestas, List<(int origem, int destino)> rotas)
         {
             this.nVertices = nVertices;
@@ -60,7 +72,7 @@ namespace TRABALHO_GRAFOS.Codigo
 
             foreach ((int origem, int destino) in rotas)
             {
-                int ancestralComum = ObterLCA(origem, destino);
+                int ancestralComum = ObterPai(origem, destino);
                 int custoCaminho = profundidade[origem] + profundidade[destino] - 2 * profundidade[ancestralComum] + 1;
 
                 if (custoCaminho <= limiteK)
@@ -95,6 +107,10 @@ namespace TRABALHO_GRAFOS.Codigo
             return resposta;
         }
 
+        /// <summary>
+        /// Inicializa os arrays de profundidade e ancestrais usando DFS.
+        /// </summary>
+        /// <param name="raiz">Vértice raiz para iniciar a busca.</param>
         private void InicializarProfundidadeEAncestrais(int raiz)
         {
             Stack<int> pilha = new Stack<int>();
@@ -119,7 +135,13 @@ namespace TRABALHO_GRAFOS.Codigo
             }
         }
 
-        private int ObterLCA(int u, int v)
+        /// <summary>
+        /// Encontra o ancestral comum mais baixo (LCA) entre dois vértices.
+        /// </summary>
+        /// <param name="u">Primeiro vértice.</param>
+        /// <param name="v">Segundo vértice.</param>
+        /// <returns>O vértice que é o LCA de u e v.</returns>
+        private int ObterPai(int u, int v)
         {
             if (profundidade[u] < profundidade[v])
             {
@@ -145,6 +167,12 @@ namespace TRABALHO_GRAFOS.Codigo
             return pai[u][0];
         }
 
+        /// <summary>
+        /// Consulta o peso máximo no caminho entre um vértice e seu ancestral.
+        /// </summary>
+        /// <param name="u">Vértice de origem.</param>
+        /// <param name="ancestral">Vértice ancestral.</param>
+        /// <returns>Maior peso no caminho entre u e ancestral.</returns>
         private int ConsultaPesoMaximo(int u, int ancestral)
         {
             int resultado = 0;
@@ -160,5 +188,4 @@ namespace TRABALHO_GRAFOS.Codigo
             return resultado;
         }
     }
-
 }

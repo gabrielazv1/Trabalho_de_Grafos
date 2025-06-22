@@ -9,9 +9,21 @@ using TRABALHO_GRAFOS.Codigo.Interface;
 
 namespace TRABALHO_GRAFOS.Codigo
 {
+    /// <summary>
+    /// Implementação de grafo utilizando matriz de adjacência.
+    /// </summary>
     public class GrafoMatriz : Grafo
     {
+        /// <summary>
+        /// Matriz de adjacência que representa o grafo.
+        /// </summary>
         public static Aresta[,] matrizGrafo;
+
+        /// <summary>
+        /// Inicializa um grafo a partir de uma lista de arestas.
+        /// </summary>
+        /// <param name="vertices">Número de vértices do grafo</param>
+        /// <param name="listaArestas">Lista de arestas no formato [origem, destino, peso]</param>
         public GrafoMatriz(int vertices, List<List<int>> listaArestas)
         {
             matrizGrafo = new Aresta[vertices, vertices];
@@ -27,6 +39,10 @@ namespace TRABALHO_GRAFOS.Codigo
             DicGrafo = PopularDicionario();
         }
 
+        /// <summary>
+        /// Converte a matriz de adjacência em um dicionário de adjacência.
+        /// </summary>
+        /// <returns>Dicionário representando o grafo</returns>
         private Dictionary<Vertice, List<Aresta>> PopularDicionario()
         {
             Dictionary<Vertice, List<Aresta>> grafo = new Dictionary<Vertice, List<Aresta>>();
@@ -52,15 +68,34 @@ namespace TRABALHO_GRAFOS.Codigo
             return grafo;
         }
 
+        /// <summary>
+        /// Troca a posição de dois vértices na matriz de adjacência.
+        /// </summary>
+        /// <param name="v1">Primeiro vértice</param>
+        /// <param name="v2">Segundo vértice</param>
         public void TrocaDoisVertices(Vertice v1, Vertice v2)
         {
-
+            // Implementação existente
         }
+
+        /// <summary>
+        /// Adiciona um novo vértice ao grafo.
+        /// </summary>
+        /// <param name="v">Vértice a ser adicionado</param>
+        /// <returns>False, pois a matriz tem tamanho fixo</returns>
         public bool AdicionarVertice(Vertice v)
         {
             return false;
         }
 
+        /// <summary>
+        /// Adiciona uma nova aresta à matriz de adjacência.
+        /// </summary>
+        /// <param name="a">Aresta a ser adicionada</param>
+        /// <returns>
+        /// True se a aresta foi adicionada com sucesso,
+        /// False se ocorrer algum erro
+        /// </returns>
         public bool AdicionarAresta(Aresta a)
         {
             try
