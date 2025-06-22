@@ -69,26 +69,6 @@ namespace TRABALHO_GRAFOS.Codigo
         }
 
         /// <summary>
-        /// Troca a posição de dois vértices na matriz de adjacência.
-        /// </summary>
-        /// <param name="v1">Primeiro vértice</param>
-        /// <param name="v2">Segundo vértice</param>
-        public void TrocaDoisVertices(Vertice v1, Vertice v2)
-        {
-            // Implementação existente
-        }
-
-        /// <summary>
-        /// Adiciona um novo vértice ao grafo.
-        /// </summary>
-        /// <param name="v">Vértice a ser adicionado</param>
-        /// <returns>False, pois a matriz tem tamanho fixo</returns>
-        public bool AdicionarVertice(Vertice v)
-        {
-            return false;
-        }
-
-        /// <summary>
         /// Adiciona uma nova aresta à matriz de adjacência.
         /// </summary>
         /// <param name="a">Aresta a ser adicionada</param>

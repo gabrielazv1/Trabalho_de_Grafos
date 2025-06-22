@@ -9,10 +9,16 @@ using TRABALHO_GRAFOS.Codigo.Interface;
 
 namespace TRABALHO_GRAFOS.Codigo
 {
+    /// <summary>
+    /// Classe Program que controla o sistema
+    /// </summary>
     public class Program
     {
         #region Main
-
+        /// <summary>
+        /// Método main que inicia a aplicação
+        /// </summary>
+        /// <param name="args"></param>
         private static void Main(string[] args)
         {
             Console.Clear();
@@ -20,6 +26,9 @@ namespace TRABALHO_GRAFOS.Codigo
         }
         #endregion
         #region Menu Inicial
+        /// <summary>
+        /// Método Iniciar para criar o grafo
+        /// </summary>
         public static void Iniciar()
         {
             int opcao;
@@ -59,6 +68,11 @@ namespace TRABALHO_GRAFOS.Codigo
             }
             while (true);
         }
+
+        /// <summary>
+        /// Método menu com as opções de criação de grafo
+        /// </summary>
+        /// <returns>Um stringbuilder com o menu inicial</returns>
         private static int MenuInicial()
         {
             Console.Clear();
@@ -74,6 +88,10 @@ namespace TRABALHO_GRAFOS.Codigo
             return LerInteiro("Escolha uma opção: ");
         }
 
+        /// <summary>
+        /// Método que constroi o cabeçalho
+        /// </summary>
+        /// <param name="titulo">Titulo do cabeçalho</param>
         public static void Cabecalho(string titulo = "Trabalho de Grafos")
         {
             StringBuilder cabecalho = new StringBuilder();
@@ -86,6 +104,9 @@ namespace TRABALHO_GRAFOS.Codigo
             cabecalho.Append("\n");
         }
 
+        /// <summary>
+        /// Método separador que separa os inputs
+        /// </summary>
         private static void Separador()
         {
             StringBuilder separador = new StringBuilder();
@@ -93,6 +114,9 @@ namespace TRABALHO_GRAFOS.Codigo
             Console.Write(separador.ToString());
         }
 
+        /// <summary>
+        /// Método Pausa para pressionar enter e continuar
+        /// </summary>
         private static void Pausa()
         {
             StringBuilder sb = new StringBuilder();
@@ -101,6 +125,11 @@ namespace TRABALHO_GRAFOS.Codigo
             Console.ReadLine();
         }
 
+        /// <summary>
+        /// Método LerInteiro que recebe a entrada do usuário e valida ela
+        /// </summary>
+        /// <param name="mensagem">string a ser validada</param>
+        /// <returns></returns>
         public static int LerInteiro(string mensagem)
         {
             Console.Write($"{mensagem}");
@@ -124,6 +153,11 @@ namespace TRABALHO_GRAFOS.Codigo
 
         #endregion
         #region Menu Operações
+        /// <summary>
+        /// Menu que mostra as opções de operações que podem ser feitas com o grafo criado
+        /// </summary>
+        /// <param name="grafo">Grafo que será executado as operações</param>
+        /// <returns></returns>
         private static int MenuOperacoes(Grafo grafo)
         {
             Console.Clear();
@@ -152,6 +186,10 @@ namespace TRABALHO_GRAFOS.Codigo
             return LerInteiro("Escolha uma opção: ");
         }
 
+        /// <summary>
+        /// Método que controla as chamadas do MenuOperacoes
+        /// </summary>
+        /// <param name="grafo">Grafo a ser controlado as operações</param>
         private static void ControlarOperacoes(Grafo grafo)
         {
             if (grafo == null)
@@ -281,7 +319,7 @@ namespace TRABALHO_GRAFOS.Codigo
                             {
                                 throw new Exception("Entrada inválida, a entrada deve ser um número inteiro.");
                             }
-
+                            Separador();
                             Console.Write("Informe o vértice de DESTINO da aresta: ");
 
                             if (!int.TryParse(Console.ReadLine(), out int id_verticeDestino))
@@ -423,7 +461,7 @@ namespace TRABALHO_GRAFOS.Codigo
                             Console.Clear();
                             Separador();
 
-                            Console.Write("Informe o vértice: ");
+                            Console.Write("Informe qual será o vértice raiz: ");
 
                             if (!int.TryParse(Console.ReadLine(), out int vertice))
                             {
@@ -492,7 +530,7 @@ namespace TRABALHO_GRAFOS.Codigo
                             Console.Clear();
                             Separador();
 
-                            Console.Write("Informe qual será o vértice de origem: ");
+                            Console.Write("Informe o vértice de ORIGEM: ");
 
                             if (!int.TryParse(Console.ReadLine(), out int id_vertOrigem))
                             {
@@ -517,6 +555,9 @@ namespace TRABALHO_GRAFOS.Codigo
         }
         #endregion
         #region Métodos de Criação do Grafo
+        /// <summary>
+        /// Método que captura dos dados para construir o grafo a mão
+        /// </summary>
         private static void SelecionaDadosDoGrafo()
         {
 
@@ -579,7 +620,12 @@ namespace TRABALHO_GRAFOS.Codigo
                 Console.WriteLine($"Erro ao criar grafo: {ex.Message}");
             }
         }
-
+        /// <summary>
+        /// Método que constroi o grafo a partir dos dados capturados do SelecionaDadosDoGrafo
+        /// </summary>
+        /// <param name="numVertices">Número de vértices</param>
+        /// <param name="numArestas">Número de arestas</param>
+        /// <returns></returns>
         public static List<List<int>> ConstruirGrafo(int numVertices, int numArestas)
         {
             List<List<int>> arestas = new List<List<int>>();
@@ -629,6 +675,9 @@ namespace TRABALHO_GRAFOS.Codigo
             return arestas;
         }
 
+        /// <summary>
+        /// Método que importa, lê, valida e cria o arquivo dimacs enviado 
+        /// </summary>
         public static void ImportarGrafoDimacs()
         {
             try
@@ -743,6 +792,12 @@ namespace TRABALHO_GRAFOS.Codigo
             }
         }
 
+        /// <summary>
+        /// Método que calcula a densidade do grafo direcionado
+        /// </summary>
+        /// <param name="numVertices">Número de vértices</param>
+        /// <param name="numArestas">Número de arestas</param>
+        /// <returns></returns>
         public static double CalculaDensidade(int numVertices, int numArestas)
         {
             if (numVertices <= 1) return 0;
@@ -750,13 +805,10 @@ namespace TRABALHO_GRAFOS.Codigo
             return densidade;
         }
         #endregion
-
         #region Método BeeCrowd
-
-        static List<(int destino, int peso)>[] grafo;
-        static bool[] visitado;
-        static List<(int u, int v, int peso)> caminhoAtual;
-
+        /// <summary>
+        /// Método que importa, lê, valida e cria o arquivo do beecrowd enviado 
+        /// </summary>
         public static void ImportarBeeCrowd()
         {
             try
@@ -874,87 +926,6 @@ namespace TRABALHO_GRAFOS.Codigo
                 Console.WriteLine($"Erro ao importar arquivo BeeCrowd: {ex.Message}");
                 Pausa();
             }
-        }
-
-        static bool BuscaProfundidade(int atual, int destino)
-        {
-            if (atual == destino)
-                return true;
-
-            visitado[atual] = true;
-
-            foreach (var (vizinho, peso) in grafo[atual])
-            {
-                if (!visitado[vizinho])
-                {
-                    caminhoAtual.Add((atual, vizinho, peso));
-                    if (BuscaProfundidade(vizinho, destino))
-                        return true;
-                    caminhoAtual.RemoveAt(caminhoAtual.Count - 1);
-                }
-            }
-
-            return false;
-        }
-
-        static int DesafioPokemon(int N, int K, List<(int, int, int)> arestas, List<(int, int)> rotas)
-        {
-            grafo = new List<(int destino, int peso)>[N + 1];
-            for (int i = 0; i <= N; i++)
-                grafo[i] = new List<(int destino, int peso)>();
-
-            foreach ((int u, int v, int w) in arestas)
-            {
-                grafo[u].Add((v, w));
-                grafo[v].Add((u, w));
-            }
-
-            List<(int custo, int valor)> itens = new List<(int custo, int valor)>();
-
-            foreach ((int origem, int destino) in rotas)
-            {
-                visitado = new bool[N + 1];
-                caminhoAtual = new List<(int u, int v, int peso)>();
-
-                BuscaProfundidade(origem, destino);
-
-                HashSet<int> verticesVisitados = new HashSet<int>();
-                int maiorForca = 0;
-
-                foreach ((int u, int v, int peso) in caminhoAtual)
-                {
-                    verticesVisitados.Add(u);
-                    verticesVisitados.Add(v);
-                    if (peso > maiorForca)
-                        maiorForca = peso;
-                }
-
-                int custo = verticesVisitados.Count;
-                if (custo <= K)
-                    itens.Add((custo, maiorForca));
-            }
-
-            int[] dp = new int[K + 1];
-            for (int i = 0; i <= K; i++)
-                dp[i] = 0;
-
-            foreach ((int custo, int valor) in itens)
-            {
-                for (int j = K; j >= custo; j--)
-                {
-                    if (dp[j - custo] + valor > dp[j])
-                        dp[j] = dp[j - custo] + valor;
-                }
-            }
-
-            int max = 0;
-            foreach (int valor in dp)
-            {
-                if (valor > max)
-                    max = valor;
-            }
-
-            return max == 0 ? -1 : max;
         }
         #endregion
     }

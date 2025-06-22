@@ -18,6 +18,11 @@ namespace TRABALHO_GRAFOS.Codigo
             NumeroDeVertices = 0;
         }
 
+        /// <summary>
+        /// Adiciona um vértice ao grafo, se ainda não existir.
+        /// </summary>
+        /// <param name="v">O vértice a ser adicionado.</param>
+        /// <returns>True se o vértice foi adicionado com sucesso; False se já existia.</returns>
         public virtual bool AdicionarVertice(Vertice v)
         {
             if (!DicGrafo.ContainsKey(v))
@@ -28,6 +33,11 @@ namespace TRABALHO_GRAFOS.Codigo
             return false;
         }
 
+        /// <summary>
+        /// Adiciona uma aresta ao grafo, conectando dois vértices existentes.
+        /// </summary>
+        /// <param name="a">A aresta a ser adicionada.</param>
+        /// <returns>True se a aresta foi adicionada com sucesso; False se os vértices não existem.</returns>
         public virtual bool AdicionarAresta(Aresta a)
         {
             if (!DicGrafo.ContainsKey(a.Origem) || !DicGrafo.ContainsKey(a.Destino))
@@ -39,6 +49,11 @@ namespace TRABALHO_GRAFOS.Codigo
             return true;
         }
 
+        /// <summary>
+        /// Troca as posições de dois vértices no dicionário do grafo, atualizando as arestas ligadas.
+        /// </summary>
+        /// <param name="v1">Primeiro vértice.</param>
+        /// <param name="v2">Segundo vértice.</param>
         public virtual void TrocaDoisVertices(Vertice v1, Vertice v2)
         {
             List<Aresta>? temp = DicGrafo[v1];
@@ -67,9 +82,14 @@ namespace TRABALHO_GRAFOS.Codigo
                         aresta.Destino = v1;
                 }
             }
-
         }
 
+        /// <summary>
+        /// Verifica se dois vértices são adjacentes, ou seja, se há uma aresta entre eles.
+        /// </summary>
+        /// <param name="v1">Vértice de origem.</param>
+        /// <param name="v2">Vértice de destino.</param>
+        /// <returns>True se forem adjacentes; caso contrário, False.</returns>
         public virtual bool SaoAdjacentes(Vertice v1, Vertice v2)
         {
             DicGrafo.TryGetValue(v1, out List<Aresta>? arestas);
@@ -77,6 +97,9 @@ namespace TRABALHO_GRAFOS.Codigo
             return arestas?.Any(aresta => aresta.Destino.Equals(v2)) ?? false;
         }
 
+        /// <summary>
+        /// Imprime o grafo no console, mostrando os vértices e suas conexões.
+        /// </summary>
         public void Imprimir()
         {
             foreach (KeyValuePair<Vertice, List<Aresta>> par in DicGrafo)
@@ -97,5 +120,4 @@ namespace TRABALHO_GRAFOS.Codigo
             }
         }
     }
-
 }

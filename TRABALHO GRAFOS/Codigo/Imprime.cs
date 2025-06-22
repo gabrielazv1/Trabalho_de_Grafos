@@ -271,16 +271,12 @@ namespace TRABALHO_GRAFOS.Codigo
 
             foreach (Vertice v in grafo.DicGrafo.Keys.OrderBy(v => v.id))
             {
-                Console.Write($"Vértice {v.id + 1} - Nível: {v.Nivel}, Pai: ");
+                Console.Write($"Vértice: {v.id + 1} | Nível: {v.Nivel} | Pai: ");
 
                 if (v.Pai != null)
-                {
                     Console.Write($"{v.Pai.id + 1}\n");
-                }
                 else
-                {
                     Console.Write("-\n");
-                }
             }
         }
 
@@ -309,15 +305,11 @@ namespace TRABALHO_GRAFOS.Codigo
             Console.WriteLine("RESULTADO FINAL:\n================================================");
             foreach (Vertice v in grafo.DicGrafo.Keys.OrderBy(v => v.id))
             {
-                Console.WriteLine($" Vértice {v.id + 1} --> Tempo de Descoberta: {v.Descoberto} - Tempo de Término: {v.Termino} - Pai: ");
+                Console.Write($"Vértice: {v.id + 1} | Tempo de Descoberta: {v.Descoberto} | Tempo de Término: {v.Termino} | Pai: ");
                 if (v.Pai != null)
-                {
                     Console.Write($"{v.Pai.id + 1}\n");
-                }
                 else
-                {
                     Console.Write("-\n");
-                }
             }
         }
 
