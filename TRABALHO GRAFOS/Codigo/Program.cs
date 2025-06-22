@@ -224,7 +224,7 @@ namespace TRABALHO_GRAFOS.Codigo
                             }
                             Separador();
 
-                            Imprime.ImprimirArestasAdj(verticeOrigem -1, verticeDestino-1, grafo);
+                            Imprime.ImprimirArestasAdj(verticeOrigem - 1, verticeDestino - 1, grafo);
                             Separador();
                         }
                         catch (Exception ex) { Console.WriteLine(ex.Message + "\nPressione ENTER para continuar..."); }
@@ -243,7 +243,7 @@ namespace TRABALHO_GRAFOS.Codigo
 
                             Separador();
 
-                            Imprime.ImprimirVerticesAdj(grafo, id_verticeV-1);
+                            Imprime.ImprimirVerticesAdj(grafo, id_verticeV - 1);
                         }
                         catch (Exception ex) { Console.WriteLine(ex.Message + "\nPressione ENTER para continuar..."); }
 
@@ -290,7 +290,7 @@ namespace TRABALHO_GRAFOS.Codigo
                             }
                             Separador();
 
-                            Imprime.ImprimirVerticeInc(grafo, id_verticeOrigem -1, id_verticeDestino - 1);
+                            Imprime.ImprimirVerticeInc(grafo, id_verticeOrigem - 1, id_verticeDestino - 1);
                         }
                         catch (Exception ex) { Console.WriteLine(ex.Message + "\nPressione ENTER para continuar..."); }
 
@@ -338,8 +338,8 @@ namespace TRABALHO_GRAFOS.Codigo
                             }
                             Separador();
 
-                            Vertice v1 = new Vertice(id_v1 -1);
-                            Vertice v2 = new Vertice(id_v2 -1);
+                            Vertice v1 = new Vertice(id_v1 - 1);
+                            Vertice v2 = new Vertice(id_v2 - 1);
 
                             Imprime.ImprimirAdjacentes(v1, v2, grafo);
                         }
@@ -412,7 +412,7 @@ namespace TRABALHO_GRAFOS.Codigo
                             Vertice v1 = new Vertice(id_v1);
                             Vertice v2 = new Vertice(id_v2);
 
-                            Imprime.ImprimirTrocaVertices(grafo, id_v1 - 1, id_v2 -1);
+                            Imprime.ImprimirTrocaVertices(grafo, id_v1 - 1, id_v2 - 1);
                         }
                         catch (Exception ex) { Console.WriteLine(ex.Message + "\nPressione ENTER para continuar..."); }
 
@@ -452,7 +452,7 @@ namespace TRABALHO_GRAFOS.Codigo
                             }
                             Separador();
 
-                            Imprime.ImprimirBuscaProfundidade(grafo, idVraiz-1);
+                            Imprime.ImprimirBuscaProfundidade(grafo, idVraiz - 1);
                         }
                         catch (Exception ex) { Console.WriteLine(ex.Message + "\nPressione ENTER para continuar..."); }
 
@@ -480,7 +480,7 @@ namespace TRABALHO_GRAFOS.Codigo
                             }
                             Console.Clear();
                             Separador();
-                            Imprime.ImprimirDijkstra(verticeOrigem -1, verticeDestino-1, grafo);
+                            Imprime.ImprimirDijkstra(verticeOrigem - 1, verticeDestino - 1, grafo);
                             Separador();
                         }
                         catch (Exception ex) { Console.WriteLine(ex.Message + " Aperte ENTER para continuar"); }
@@ -500,7 +500,7 @@ namespace TRABALHO_GRAFOS.Codigo
                             }
                             Separador();
 
-                            Imprime.ImprimirFloydWarshal(grafo, id_vertOrigem-1);
+                            Imprime.ImprimirFloydWarshal(grafo, id_vertOrigem - 1);
                         }
                         catch (Exception ex) { Console.WriteLine(ex.Message + "\nPressione ENTER para continuar..."); }
 
@@ -862,7 +862,8 @@ namespace TRABALHO_GRAFOS.Codigo
                 Console.WriteLine("Arquivo BeeCrowd lido com sucesso!");
                 Separador();
 
-                int resultado = ResolverGeraldinho(N, K, arestas, rotas);
+                var desafio = new Desafio();
+                int resultado = desafio.DesafioPokemon(N, K, arestas, rotas);
 
                 Console.WriteLine($"Maior força possível: {resultado}");
                 Separador();
@@ -874,6 +875,7 @@ namespace TRABALHO_GRAFOS.Codigo
                 Pausa();
             }
         }
+
         static bool BuscaProfundidade(int atual, int destino)
         {
             if (atual == destino)
@@ -895,31 +897,31 @@ namespace TRABALHO_GRAFOS.Codigo
             return false;
         }
 
-        static int ResolverGeraldinho(int N, int K, List<(int, int, int)> arestas, List<(int, int)> rotas)
+        static int DesafioPokemon(int N, int K, List<(int, int, int)> arestas, List<(int, int)> rotas)
         {
             grafo = new List<(int destino, int peso)>[N + 1];
             for (int i = 0; i <= N; i++)
-                grafo[i] = new List<(int, int)>();
+                grafo[i] = new List<(int destino, int peso)>();
 
-            foreach (var (u, v, w) in arestas)
+            foreach ((int u, int v, int w) in arestas)
             {
                 grafo[u].Add((v, w));
                 grafo[v].Add((u, w));
             }
 
-            List<(int custo, int valor)> itens = new List<(int, int)>();
+            List<(int custo, int valor)> itens = new List<(int custo, int valor)>();
 
-            foreach (var (origem, destino) in rotas)
+            foreach ((int origem, int destino) in rotas)
             {
                 visitado = new bool[N + 1];
-                caminhoAtual = new List<(int, int, int)>();
+                caminhoAtual = new List<(int u, int v, int peso)>();
 
                 BuscaProfundidade(origem, destino);
 
                 HashSet<int> verticesVisitados = new HashSet<int>();
                 int maiorForca = 0;
 
-                foreach (var (u, v, peso) in caminhoAtual)
+                foreach ((int u, int v, int peso) in caminhoAtual)
                 {
                     verticesVisitados.Add(u);
                     verticesVisitados.Add(v);
@@ -933,18 +935,24 @@ namespace TRABALHO_GRAFOS.Codigo
             }
 
             int[] dp = new int[K + 1];
-            foreach (var (custo, valor) in itens)
+            for (int i = 0; i <= K; i++)
+                dp[i] = 0;
+
+            foreach ((int custo, int valor) in itens)
             {
                 for (int j = K; j >= custo; j--)
                 {
-                    dp[j] = Math.Max(dp[j], dp[j - custo] + valor);
+                    if (dp[j - custo] + valor > dp[j])
+                        dp[j] = dp[j - custo] + valor;
                 }
             }
 
             int max = 0;
             foreach (int valor in dp)
+            {
                 if (valor > max)
                     max = valor;
+            }
 
             return max == 0 ? -1 : max;
         }
