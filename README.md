@@ -30,8 +30,11 @@ Este repositório contém o projeto desenvolvido em grupo para a disciplina **Al
   - Verifique se a base é `desenvolvimento` e a compare é sua branch
   - Descreva o que foi feito
   - Clique em **Create pull request**
-
 4. Após revisão, o grupo faz o **merge** do PR para a `desenvolvimento`.
+
+## Diagrama de Classes
+
+![Diagrama do Projeto](https://github.com/gabrielazv1/Trabalho_de_Grafos/blob/main/TRABALHO%20GRAFOS/DiagramaGrafos.png?raw=true)
 
 ## Links
 
